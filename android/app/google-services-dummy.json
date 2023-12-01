@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "720366874096",
+    "project_id": "industrial-sooq",
+    "storage_bucket": "industrial-sooq.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:720366874096:android:731d5853ccd7957d91c135",
+        "android_client_info": {
+          "package_name": "com.tqniait.industrial_sooq"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "720366874096-1t0bl61urm7kniq6npn8g1tj0129ssrt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQgz3ue7kbK9_05dmH27KGjKvvvzuHaIc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "720366874096-1t0bl61urm7kniq6npn8g1tj0129ssrt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "720366874096-9d40d8fvj9ugcmh8gcmi3ash5262s7vd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tqniait.industrialSoooq"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
