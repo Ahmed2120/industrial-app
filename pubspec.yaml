@@ -69,17 +69,17 @@ dependencies:
   flutter_html_table: ^3.0.0-beta.2
   sembast: ^3.4.3+1
   path_provider: ^2.0.14
-#  intl: ^0.17.0
+  #  intl: ^0.17.0
   shimmer: ^3.0.0
   url_launcher: ^6.1.10
   carousel_slider: ^4.2.1
 
   firebase_core: ^2.24.0
-#  firebase_core_platform_interface: 4.5.1
+  #  firebase_core_platform_interface: 4.5.1
   firebase_messaging: ^14.7.6
   firebase_database: ^10.3.6
   firebase_auth: ^4.15.0
-#  google_mobile_ads: ^2.4.0
+  #  google_mobile_ads: ^2.4.0
   google_sign_in: ^6.1.0
   flutter_facebook_auth: ^6.0.3
   photo_view: ^0.14.0
@@ -98,7 +98,7 @@ dependencies:
   razorpay_flutter: ^1.3.4
   group_radio_button: ^1.3.0
   flutter_native_image: ^0.0.6+1
-#  flutter_paystack: ^1.0.7
+  #  flutter_paystack: ^1.0.7
   firebase_dynamic_links: ^5.4.6
   in_app_purchase: ^3.1.5
   flutter_linkify: ^6.0.0
@@ -114,7 +114,7 @@ dependencies:
   camera: ^0.10.4
   app_tracking_transparency: ^2.0.3
   firebase_crashlytics: ^3.4.6
-#  flutter_math_fork: ^0.7.2
+  #  flutter_math_fork: ^0.7.2
   flutter_layout_grid: ^2.0.5
 
 dev_dependencies:
@@ -127,10 +127,10 @@ flutter_icons:
   ios: true
   image_path: "assets/images/appLogo.png"
 
-# dependency_overrides:
-#   xml: '6.1.0'
- 
- 
+  # dependency_overrides:
+  #   xml: '6.1.0'
+
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -144,55 +144,55 @@ flutter:
   
   # To add assets to your application, add an assets section, like this:
   assets:
-   - assets/images/placeholder_circle_image.png
-   - assets/images/placeholder_image.png
-   - assets/langs/ar-DZ.json
-   - assets/langs/en-US.json
-   - assets/langs/hi-IN.json
-   - assets/langs/de-DE.json
-   - assets/langs/es-ES.json
-   - assets/langs/fr-FR.json
-   - assets/langs/id-ID.json
-   - assets/langs/it-IT.json
-   - assets/langs/ja-JP.json
-   - assets/langs/ko-KR.json
-   - assets/langs/ms-MY.json
-   - assets/langs/pt-PT.json
-   - assets/langs/ru-RU.json
-   - assets/langs/th-TH.json
-   - assets/langs/tr-TR.json
-   - assets/langs/zh-CN.json
-   - assets/images/verify_email_icon.jpg
-   - assets/images/down.png
-   - assets/images/baesline_access_time_black_24.png
-   - assets/images/baseline_check_green_24.png
-   - assets/images/baseline_graph_black_24.png
-   - assets/images/baseline_price_down_black_24.png
-   - assets/images/chat.png
-   - assets/images/seo.png
-   - assets/images/upload.png
-   - assets/images/baseline_price_up_black_24.png
-   - assets/images/baseline_empty_item_grey_24.png
-   - assets/images/home_icon/discount_products.png
-   - assets/images/home_icon/easy_payment.png
-   - assets/images/home_icon/featured_products.png
-   - assets/images/home_icon/free_download.png
-   - assets/images/trending.png
-   - assets/images/app_icon.png
-   - assets/images/app_icon0.png
-   - assets/images/logo_dark.png
-   - assets/images/app_icon2.png
-   - assets/images/flutter_buy_and_sell_logo_light.png
-   - assets/images/baseline_pin_black_24.png
-   - assets/images/baseline_favourite_grey_24.png
-   - assets/images/default_image.png
-   - assets/images/baseline_promotion_color_74.png
-   - assets/images/user_default_photo.png
-   - assets/images/loaction_illustration.svg
-   - assets/images/slider_1.svg
-   - assets/images/slider_2.svg
-   - assets/images/slider_3.svg
-   - assets/images/demo_alert.png
+    - assets/images/placeholder_circle_image.png
+    - assets/images/placeholder_image.png
+    - assets/langs/ar-DZ.json
+    - assets/langs/en-US.json
+    - assets/langs/hi-IN.json
+    - assets/langs/de-DE.json
+    - assets/langs/es-ES.json
+    - assets/langs/fr-FR.json
+    - assets/langs/id-ID.json
+    - assets/langs/it-IT.json
+    - assets/langs/ja-JP.json
+    - assets/langs/ko-KR.json
+    - assets/langs/ms-MY.json
+    - assets/langs/pt-PT.json
+    - assets/langs/ru-RU.json
+    - assets/langs/th-TH.json
+    - assets/langs/tr-TR.json
+    - assets/langs/zh-CN.json
+    - assets/images/verify_email_icon.jpg
+    - assets/images/down.png
+    - assets/images/baesline_access_time_black_24.png
+    - assets/images/baseline_check_green_24.png
+    - assets/images/baseline_graph_black_24.png
+    - assets/images/baseline_price_down_black_24.png
+    - assets/images/chat.png
+    - assets/images/seo.png
+    - assets/images/upload.png
+    - assets/images/baseline_price_up_black_24.png
+    - assets/images/baseline_empty_item_grey_24.png
+    - assets/images/home_icon/discount_products.png
+    - assets/images/home_icon/easy_payment.png
+    - assets/images/home_icon/featured_products.png
+    - assets/images/home_icon/free_download.png
+    - assets/images/trending.png
+    - assets/images/app_icon.png
+    - assets/images/app_icon0.png
+    - assets/images/logo_dark.png
+    - assets/images/app_icon2.png
+    - assets/images/flutter_buy_and_sell_logo_light.png
+    - assets/images/baseline_pin_black_24.png
+    - assets/images/baseline_favourite_grey_24.png
+    - assets/images/default_image.png
+    - assets/images/baseline_promotion_color_74.png
+    - assets/images/user_default_photo.png
+    - assets/images/loaction_illustration.svg
+    - assets/images/slider_1.svg
+    - assets/images/slider_2.svg
+    - assets/images/slider_3.svg
+    - assets/images/demo_alert.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
