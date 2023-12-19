@@ -23,11 +23,14 @@ import 'package:flutterbuyandsell/viewobject/holder/package_bought_parameter_hol
 import 'package:flutterbuyandsell/viewobject/package.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
+import 'package:in_app_purchase_android/billing_client_wrappers.dart';
+
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
 class PackageShopInAppPurchaseView extends StatefulWidget {
-  const PackageShopInAppPurchaseView({required this.androidKeyList, required this.iosKeyList});
+  const PackageShopInAppPurchaseView(
+      {required this.androidKeyList, required this.iosKeyList});
   final String? androidKeyList;
   final String? iosKeyList;
 
@@ -48,7 +51,7 @@ class _PackageShopInAppPurchaseViewState
   List<ProductDetails> _products = <ProductDetails>[];
 
   /// Updates to purchases
-  late StreamSubscription<List<PurchaseDetails>>? _subscription;
+  StreamSubscription<List<PurchaseDetails>>? _subscription;
 
   final String _kConsumableId = 'consumable';
   final bool _kAutoConsume = true;
@@ -67,18 +70,18 @@ class _PackageShopInAppPurchaseViewState
       await _getProducts();
 
       // Listen to new purchases
-      _subscription = _iap.purchaseStream.listen(
-          (List<PurchaseDetails> purchaseDetailsList) {
-        _listenToPurchaseUpdated(purchaseDetailsList);
-      }, onDone: () {
-        print('Done Purhcase');
-        _subscription?.cancel();
-      }, onError: (dynamic error) {
-        print(error);
-        print('Error Purchase');
-        PsProgressDialog.dismissDialog();
-        // handle error here.
-      });
+      // _subscription = _iap.purchaseStream.listen(
+      //     (List<PurchaseDetails> purchaseDetailsList) {
+      //   _listenToPurchaseUpdated(purchaseDetailsList);
+      // }, onDone: () {
+      //   print('Done Purhcase');
+      //   _subscription?.cancel();
+      // }, onError: (dynamic error) {
+      //   print(error);
+      //   print('Error Purchase');
+      //   PsProgressDialog.dismissDialog();
+      //   // handle error here.
+      // });
     }
   }
 
@@ -106,62 +109,61 @@ class _PackageShopInAppPurchaseViewState
   }
 
   Future<void> _listenToPurchaseUpdated(
-      List<PurchaseDetails> purchaseDetailsList) async {  
+      List<PurchaseDetails> purchaseDetailsList) async {
     for (PurchaseDetails purchaseDetails in purchaseDetailsList) {
-      if (Platform.isAndroid) {
-        if (!_kAutoConsume && purchaseDetails.productID == _kConsumableId) {
-          final InAppPurchaseAndroidPlatformAddition androidAddition =
-              _iap.getPlatformAddition<InAppPurchaseAndroidPlatformAddition>();
-          await androidAddition.consumePurchase(purchaseDetails);
-        }
-      }
-      if (purchaseDetails.pendingCompletePurchase) {
-        await PsProgressDialog.showDialog(context);
-        await _iap.completePurchase(purchaseDetails);
-      }
+      // if (Platform.isAndroid) {
+      //   if (!_kAutoConsume && purchaseDetails.productID == _kConsumableId) {
+      //     final InAppPurchaseAndroidPlatformAddition androidAddition =
+      //         _iap.getPlatformAddition<InAppPurchaseAndroidPlatformAddition>();
+      //     await androidAddition.consumePurchase(purchaseDetails);
+      //   }
+      // }
+      // if (purchaseDetails.pendingCompletePurchase) {
+      //   await PsProgressDialog.showDialog(context);
+      //   await _iap.completePurchase(purchaseDetails);
+      // }
 
-      if (purchaseDetails.status == PurchaseStatus.purchased) {
-        
-        //
-        // Call PS Server
-        //
-        print('NEW PURCHASE');
-        print(purchaseDetails.status);
-        final Package package = getPackageByIAPKey(purchaseDetails.productID)!;
-        final PackgageBoughtParameterHolder packgageBoughtParameterHolder =
-            PackgageBoughtParameterHolder(
-                userId: psValueHolder!.loginUserId,
-                packageId: package.packageId,
-                paymentMethod: PsConst.PAYMENT_IN_APP_PURCHASE_METHOD,
-                price: amount,
-                razorId: '',
-                isPaystack: PsConst.ZERO);
-        final PsResource<ApiStatus> packageBoughtStatus =
-            await packageBoughtProvider!
-                .buyAdPackge(packgageBoughtParameterHolder.toMap());
-        PsProgressDialog.dismissDialog();
-        if (packageBoughtStatus.status == PsStatus.SUCCESS) {
-          showDialog<dynamic>(
-              context: context,
-              builder: (BuildContext contet) {
-                return SuccessDialog(
-                  message: Utils.getString(
-                      context, 'item_entry__buy_package_success'),
-                  onPressed: () {
-                    Navigator.pop(context, package.postCount);
-                  },
-                );
-              });
-        } else {
-          showDialog<dynamic>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(
-                  message: packageBoughtStatus.message,
-                );
-              });
-        }
+      // if (purchaseDetails.status == PurchaseStatus.purchased) {
+      //
+      // Call PS Server
+      //
+      print('NEW PURCHASE');
+      print(purchaseDetails.status);
+      final Package package = getPackageByIAPKey(purchaseDetails.productID)!;
+      final PackgageBoughtParameterHolder packgageBoughtParameterHolder =
+          PackgageBoughtParameterHolder(
+              userId: psValueHolder!.loginUserId,
+              packageId: package.packageId,
+              paymentMethod: PsConst.PAYMENT_IN_APP_PURCHASE_METHOD,
+              price: amount,
+              razorId: '',
+              isPaystack: PsConst.ZERO);
+      final PsResource<ApiStatus> packageBoughtStatus =
+          await packageBoughtProvider!
+              .buyAdPackge(packgageBoughtParameterHolder.toMap());
+      PsProgressDialog.dismissDialog();
+      if (packageBoughtStatus.status == PsStatus.SUCCESS) {
+        showDialog<dynamic>(
+            context: context,
+            builder: (BuildContext contet) {
+              return SuccessDialog(
+                message:
+                    Utils.getString(context, 'item_entry__buy_package_success'),
+                onPressed: () {
+                  Navigator.pop(context, package.postCount);
+                },
+              );
+            });
+      } else {
+        showDialog<dynamic>(
+            context: context,
+            builder: (BuildContext context) {
+              return ErrorDialog(
+                message: packageBoughtStatus.message,
+              );
+            });
       }
+      // }
       PsProgressDialog.dismissDialog();
     }
   }
@@ -189,8 +191,8 @@ class _PackageShopInAppPurchaseViewState
 
     try {
       // if (productDetails.id == _kConsumableId) {
-      final bool status = await _iap.buyConsumable(
-          purchaseParam: purchaseParam);
+      final bool status =
+          await _iap.buyConsumable(purchaseParam: purchaseParam);
       print(status);
       // }
     } catch (e) {
@@ -220,8 +222,7 @@ class _PackageShopInAppPurchaseViewState
   Package? getPackageByIAPKey(String key) {
     final int index = packageBoughtProvider!.packageList.data!
         .indexWhere((Package package) => package.iapId == key);
-    if (index == -1) 
-      return null;    
+    if (index == -1) return null;
     final Package package =
         packageBoughtProvider!.packageList.data!.elementAt(index);
     return package;
@@ -305,14 +306,26 @@ class _PackageShopInAppPurchaseViewState
                                         getPackageByIAPKey(_products[index].id);
                                     if (package == null) {
                                       return const SizedBox();
-                                    }    
+                                    }
                                     return PackageItem(
                                       package: package,
-                                      priceWithCurrency:
-                                          _products[index].price,
+                                      priceWithCurrency: _products[index].price,
                                       onTap: () {
                                         amount = _products[index].price;
-                                        _buyProduct(_products[index]);
+                                        _subscription = _iap.purchaseStream
+                                            .listen((List<PurchaseDetails>
+                                                purchaseDetailsList) {
+                                          _listenToPurchaseUpdated(
+                                              purchaseDetailsList);
+                                        }, onDone: () {
+                                          print('Done Purhcase');
+                                          _subscription?.cancel();
+                                        }, onError: (dynamic error) {
+                                          print(error);
+                                          print('Error Purchase');
+                                          PsProgressDialog.dismissDialog();
+                                          // handle error here.
+                                        });
                                       },
                                     );
                                   },
@@ -320,7 +333,7 @@ class _PackageShopInAppPurchaseViewState
                                 ),
                               ),
                             ]),
-                            PSProgressIndicator(provider.packageList.status)
+                        PSProgressIndicator(provider.packageList.status)
                       ],
                     ),
                   );

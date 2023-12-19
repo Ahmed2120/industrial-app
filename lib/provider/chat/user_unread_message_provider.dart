@@ -1,5 +1,3 @@
-
-
 import 'dart:async';
 
 import 'package:flutterbuyandsell/api/common/ps_resource.dart';
@@ -58,7 +56,7 @@ class UserUnreadMessageProvider extends PsProvider {
       daoSubscription.cancel();
     }
 
-    if(daoDeleteSubscription != null) {
+    if (daoDeleteSubscription != null) {
       daoDeleteSubscription.cancel();
     }
     isDispose = true;
@@ -79,8 +77,7 @@ class UserUnreadMessageProvider extends PsProvider {
         PsStatus.PROGRESS_LOADING);
   }
 
-  Future<dynamic> userDeleteUnreadMessageCount(
-  ) async {
+  Future<dynamic> userDeleteUnreadMessageCount() async {
     isConnectedToInternet = await Utils.checkInternetConnectivity();
     isLoading = true;
 

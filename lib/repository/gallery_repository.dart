@@ -77,7 +77,7 @@ class GalleryRepository extends PsRepository {
       File imageFile,
       String loginUserId,
       bool isConnectedToInternet,
-      PsStatus status, 
+      PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<DefaultPhoto> _resource = await _psApiService
         .postItemImageUpload(itemId, imgId, ordering, imageFile, loginUserId);
@@ -112,11 +112,16 @@ class GalleryRepository extends PsRepository {
     }
   }
 
-    Future<PsResource<DefaultPhoto>> postVideoUpload(String itemId, String videoId,
-      File imageFile, String loginUserId, bool isConnectedToInternet, PsStatus status,
+  Future<PsResource<DefaultPhoto>> postVideoUpload(
+      String itemId,
+      String videoId,
+      File imageFile,
+      String loginUserId,
+      bool isConnectedToInternet,
+      PsStatus status,
       {bool isLoadFromServer = true}) async {
-    final PsResource<DefaultPhoto> _resource =
-        await _psApiService.postVideoUpload(itemId, videoId, imageFile, loginUserId);
+    final PsResource<DefaultPhoto> _resource = await _psApiService
+        .postVideoUpload(itemId, videoId, imageFile, loginUserId);
     if (_resource.status == PsStatus.SUCCESS) {
       return _resource;
     } else {
@@ -127,12 +132,16 @@ class GalleryRepository extends PsRepository {
     }
   }
 
-
-    Future<PsResource<DefaultPhoto>> postVideoThumbnailUpload(String itemId, String videoId,
-      File imageFile, String loginUserId, bool isConnectedToInternet, PsStatus status,
+  Future<PsResource<DefaultPhoto>> postVideoThumbnailUpload(
+      String itemId,
+      String videoId,
+      File imageFile,
+      String loginUserId,
+      bool isConnectedToInternet,
+      PsStatus status,
       {bool isLoadFromServer = true}) async {
-    final PsResource<DefaultPhoto> _resource =
-        await _psApiService.postVideoThumbnailUpload(itemId, videoId, imageFile, loginUserId);
+    final PsResource<DefaultPhoto> _resource = await _psApiService
+        .postVideoThumbnailUpload(itemId, videoId, imageFile, loginUserId);
     if (_resource.status == PsStatus.SUCCESS) {
       return _resource;
     } else {
@@ -143,7 +152,7 @@ class GalleryRepository extends PsRepository {
     }
   }
 
-    Future<PsResource<ApiStatus>> deleItemVideo(Map<dynamic, dynamic> jsonMap,
+  Future<PsResource<ApiStatus>> deleItemVideo(Map<dynamic, dynamic> jsonMap,
       String loginUserId, bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<ApiStatus> _resource =
@@ -157,7 +166,6 @@ class GalleryRepository extends PsRepository {
       return completer.future;
     }
   }
-
 
   Future<PsResource<ApiStatus>> deleItemImage(Map<dynamic, dynamic> jsonMap,
       String? loginUserId, bool isConnectedToInternet, PsStatus status,
@@ -174,10 +182,8 @@ class GalleryRepository extends PsRepository {
     }
   }
 
-  Future<PsResource<ApiStatus>> postApplyBlueMark(
-      Map<dynamic, dynamic> jsonMap,
-      bool isConnectedToInternet,
-      PsStatus status,
+  Future<PsResource<ApiStatus>> postApplyBlueMark(Map<dynamic, dynamic> jsonMap,
+      bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<ApiStatus> _resource =
         await _psApiService.postApplyBlueMark(jsonMap);
@@ -201,8 +207,8 @@ class GalleryRepository extends PsRepository {
       String isUserOnline,
       {bool isLoadFromServer = true}) async {
     final PsResource<DefaultPhoto> _resource =
-        await _psApiService.postChatImageUpload(
-            senderId, sellerUserId, buyerUserId, itemId, type, imageFile, isUserOnline);
+        await _psApiService.postChatImageUpload(senderId, sellerUserId,
+            buyerUserId, itemId, type, imageFile, isUserOnline);
     if (_resource.status == PsStatus.SUCCESS) {
       await _galleryDao.deleteAll();
       await insert(_resource.data);

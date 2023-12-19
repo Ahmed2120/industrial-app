@@ -551,7 +551,7 @@ class _ChatViewState extends State<ChatView>
                         Flexible(
                           child: Container(
                             margin:
-                                const EdgeInsets.only(bottom: PsDimens.space12),
+                            const EdgeInsets.only(bottom: PsDimens.space12),
                             child: FirebaseAnimatedList(
                               key: ValueKey<bool>(_anchorToBottom),
                               query: _messagesRef
@@ -563,15 +563,15 @@ class _ChatViewState extends State<ChatView>
                                   ? (DataSnapshot a, DataSnapshot b) {
                                 final Map<dynamic, dynamic> mapb = b.value as dynamic;
                                 final Map<dynamic, dynamic> mapa = a.value as dynamic;
-                                      // return b.value
-                                      // .toString()
-                                      // .compareTo(
-                                      //     a.value.toString());
-                                      return mapb['addedDate']
-                                          .toString()
-                                          .compareTo(
-                                          mapa['addedDate'].toString());
-                                    }
+                                // return b.value
+                                // .toString()
+                                // .compareTo(
+                                //     a.value.toString());
+                                return mapb['addedDate']
+                                    .toString()
+                                    .compareTo(
+                                    mapa['addedDate'].toString());
+                              }
                                   : null,
                               itemBuilder: (BuildContext context,
                                   DataSnapshot snapshot,
@@ -581,11 +581,11 @@ class _ChatViewState extends State<ChatView>
 
                                 bool isSameDate = false;
                                 final Message messages =
-                                    Message().fromMap(snapshot.value)!;
+                                Message().fromMap(snapshot.value)!;
 
                                 final String chatDateString =
-                                    Utils.convertTimeStampToDate(
-                                        messages.addedDateTimeStamp);
+                                Utils.convertTimeStampToDate(
+                                    messages.addedDateTimeStamp);
 
                                 if (index == 0 || lastTimeStamp == null) {
                                   lastTimeStamp = chatDateString;
@@ -594,12 +594,12 @@ class _ChatViewState extends State<ChatView>
                                 }
 
                                 final DateTime msgDate =
-                                    Utils.getDateOnlyFromTimeStamp(
-                                        messages.addedDateTimeStamp!);
+                                Utils.getDateOnlyFromTimeStamp(
+                                    messages.addedDateTimeStamp!);
 
                                 final DateTime lastDate =
-                                    Utils.getDateOnlyFromTimeStamp(
-                                        lastAddedDateTimeStamp!);
+                                Utils.getDateOnlyFromTimeStamp(
+                                    lastAddedDateTimeStamp!);
 
                                 // print(msgDate.compareTo(lastDate));
 
@@ -617,10 +617,10 @@ class _ChatViewState extends State<ChatView>
                                   chatFlag: widget.chatFlag,
                                   chatHistoryProvider: getChatHistoryProvider,
                                   chatHistoryParameterHolder:
-                                      getChatHistoryParameterHolder,
+                                  getChatHistoryParameterHolder,
                                   messageObj: messages,
                                   itemDetail:
-                                      itemDetailProvider.itemDetail.data,
+                                  itemDetailProvider.itemDetail.data,
                                   psValueHolder: psValueHolder,
                                   updateDataToFireBase: _updateDataToFireBase,
                                   insertDataToFireBase: _insertDataToFireBase,
@@ -628,9 +628,9 @@ class _ChatViewState extends State<ChatView>
                                   checkOfferStatus: checkOfferStatus,
                                   index: index,
                                   isUserOnline:
-                                      isActive == ChatUserStatus.active
-                                          ? PsConst.ONE
-                                          : PsConst.ZERO,
+                                  isActive == ChatUserStatus.active
+                                      ? PsConst.ONE
+                                      : PsConst.ZERO,
                                 );
 
                                 late Widget _dateWidget;
@@ -641,7 +641,7 @@ class _ChatViewState extends State<ChatView>
                                         bottom: PsDimens.space8),
                                     child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
                                         _spacingWidget,
                                         const Expanded(
@@ -656,8 +656,8 @@ class _ChatViewState extends State<ChatView>
                                           decoration: BoxDecoration(
                                               color: Colors.black54,
                                               borderRadius:
-                                                  BorderRadius.circular(
-                                                      PsDimens.space8)),
+                                              BorderRadius.circular(
+                                                  PsDimens.space8)),
                                           child: Text(
                                             lastTimeStamp!,
                                             style: Theme.of(context)
@@ -691,12 +691,12 @@ class _ChatViewState extends State<ChatView>
                                 return isSameDate
                                     ? _chatCell
                                     : Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          _chatCell,
-                                          _dateWidget,
-                                        ],
-                                      );
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    _chatCell,
+                                    _dateWidget,
+                                  ],
+                                );
                               },
                             ),
                           ),
@@ -2651,9 +2651,11 @@ class _EditTextAndButtonWidgetState extends State<EditTextAndButtonWidget> {
                       child: Container(
                         height: double.infinity,
                         width: double.infinity,
-                        child: const Icon(
+                        child: Icon(
                           Icons.send,
-                          color: Colors.white,
+                          color: Utils.isLightMode(context)
+                              ? Colors.grey[200]!
+                              : Colors.black87,
                           size: PsDimens.space20,
                         ),
                       ),

@@ -1263,6 +1263,7 @@ class _PopUpMenuWidget extends StatelessWidget {
       case '3':
         final Size size = MediaQuery.of(context).size;
         if (itemDetailProvider.itemDetail.data!.dynamicLink != null) {
+          // print("")
           Share.share(
             'Go to App:\n' + itemDetailProvider.itemDetail.data!.dynamicLink!,
             // +'Image:\n' + PsConfig.ps_app_image_url + itemImage,
@@ -2202,6 +2203,9 @@ class _EditAndDeleteButtonWidget extends StatelessWidget {
                                 hasShadow: false,
                                 width: PsDimens.space64,
                                 icon: Icons.delete,
+                                iconColor: Utils.isLightMode(context)
+                                    ? Colors.grey[200]!
+                                    : Colors.black87,
                                 colorData: PsColors.buttonColor,
                                 // titleText:
                                 //     Utils.getString(context, 'item_detail__delete'),
@@ -2284,6 +2288,7 @@ class _EditAndDeleteButtonWidget extends StatelessWidget {
                                     colorData: PsColors.buttonColor,
                                     titleText: Utils.getString(
                                         context, 'item_detail__mark_sold'),
+
                                     onPressed: () async {
                                       showDialog<dynamic>(
                                           context: context,

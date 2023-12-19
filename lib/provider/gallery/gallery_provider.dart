@@ -51,7 +51,7 @@ class GalleryProvider extends PsProvider {
   late StreamSubscription<PsResource<List<DefaultPhoto>>> subscription;
   late StreamController<PsResource<List<DefaultPhoto>>> galleryListStream;
 
-    final PsResource<List<DefaultPhoto>> _tempGalleryList =
+  final PsResource<List<DefaultPhoto>> _tempGalleryList =
       PsResource<List<DefaultPhoto>>(PsStatus.NOACTION, '', <DefaultPhoto>[]);
   PsResource<List<DefaultPhoto>> get tempGalleryList => _tempGalleryList;
 
@@ -93,15 +93,23 @@ class GalleryProvider extends PsProvider {
     isLoading = true;
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
-
-    _defaultPhoto = await _repo.postItemImageUpload(itemId, imgId, ordering,
-        imageFile!, loginUserId, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
+    print(itemId);
+    print(imageFile.toString());
+    _defaultPhoto = await _repo.postItemImageUpload(
+        itemId,
+        imgId,
+        ordering,
+        imageFile!,
+        loginUserId,
+        isConnectedToInternet,
+        PsStatus.PROGRESS_LOADING);
 
     return _defaultPhoto;
   }
 
   Future<dynamic> postReorderImages(
-    List<Map<dynamic, dynamic>> jsonMap, String loginUserId,
+    List<Map<dynamic, dynamic>> jsonMap,
+    String loginUserId,
   ) async {
     isLoading = true;
 
@@ -123,13 +131,13 @@ class GalleryProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _defaultPhoto = await _repo.postVideoUpload(itemId, videoId, imageFile!, loginUserId,
-        isConnectedToInternet, PsStatus.PROGRESS_LOADING);
+    _defaultPhoto = await _repo.postVideoUpload(itemId, videoId, imageFile!,
+        loginUserId, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _defaultPhoto;
   }
 
-    Future<dynamic> postVideoThumbnailUpload(
+  Future<dynamic> postVideoThumbnailUpload(
     String itemId,
     String videoId,
     File? imageFile,
@@ -139,13 +147,18 @@ class GalleryProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _defaultPhoto = await _repo.postVideoThumbnailUpload(itemId, videoId, imageFile!, loginUserId,
-        isConnectedToInternet, PsStatus.PROGRESS_LOADING);
+    _defaultPhoto = await _repo.postVideoThumbnailUpload(
+        itemId,
+        videoId,
+        imageFile!,
+        loginUserId,
+        isConnectedToInternet,
+        PsStatus.PROGRESS_LOADING);
 
     return _defaultPhoto;
   }
 
-    Future<dynamic> deleItemVideo(
+  Future<dynamic> deleItemVideo(
     Map<dynamic, dynamic> jsonMap,
     String loginUserId,
   ) async {
@@ -186,21 +199,20 @@ class GalleryProvider extends PsProvider {
     return _apiStatus;
   }
 
- Future<dynamic> postChatImageUpload(
-    String senderId,
-    String sellerUserId,
-    String buyerUserId,
-    String itemId,
-    String type,
-    File? imageFile,
-    String isUserOnline
-  ) async {
+  Future<dynamic> postChatImageUpload(
+      String senderId,
+      String sellerUserId,
+      String buyerUserId,
+      String itemId,
+      String type,
+      File? imageFile,
+      String isUserOnline) async {
     isLoading = true;
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _defaultPhoto = await _repo.postChatImageUpload(
-        senderId, sellerUserId, buyerUserId, itemId, type, imageFile!, isUserOnline);
+    _defaultPhoto = await _repo.postChatImageUpload(senderId, sellerUserId,
+        buyerUserId, itemId, type, imageFile!, isUserOnline);
 
     return _defaultPhoto;
   }

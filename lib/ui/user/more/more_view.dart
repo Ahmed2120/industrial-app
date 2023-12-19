@@ -120,7 +120,6 @@ class _MoreViewState extends State<MoreView> {
                   _MoreFollowingWidget(),
                   const SizedBox(height: PsDimens.space4),
                   _MoreHistoryWidget(),
-                  const SizedBox(height: PsDimens.space8),
                   _MoreSettingAndPrivacyTitleWidget(),
                   if (Utils.showUI(valueHolder!.blockedFeatureDisabled))
                     _MoreBlockUserWidget(),
@@ -602,12 +601,14 @@ class _MoreSettingAndPrivacyTitleWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Text(
-            Utils.getString(context, 'more__setting_and_privacy_title'),
-            softWrap: false,
-            textAlign: TextAlign.left,
-            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                color: PsColors.textColor2, fontWeight: FontWeight.bold),
+          Expanded(
+            child: Text(
+              Utils.getString(context, 'more__setting_and_privacy_title'),
+              softWrap: false,
+              textAlign: TextAlign.left,
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  color: PsColors.textColor2, fontWeight: FontWeight.bold),
+            ),
           ),
         ],
       ),

@@ -237,7 +237,7 @@ class __SendButtonWidgetState extends State<_SendButtonWidget> {
       verificationId = verId;
       PsProgressDialog.dismissDialog();
       print('code has been send');
-
+      print(verificationId);
       final dynamic returnEditPhone = await Navigator.pushNamed(
           context, RoutePaths.edit_phone_verify_container,
           arguments: VerifyPhoneIntentHolder(

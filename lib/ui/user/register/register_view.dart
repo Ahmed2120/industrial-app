@@ -457,8 +457,6 @@ class __SignInButtonWidgetState extends State<_SignInButtonWidget> {
           } else {
             if (Utils.checkEmailFormat(
                 widget.emailTextEditingController!.text.trim())!) {
-              print('done');
-
               await widget.provider.signUpWithEmailId(
                   context,
                   widget.onRegisterSelected,
@@ -466,7 +464,6 @@ class __SignInButtonWidgetState extends State<_SignInButtonWidget> {
                   widget.emailTextEditingController!.text.trim(),
                   widget.passwordTextEditingController!.text);
             } else {
-              print('ok');
               callWarningDialog(context,
                   Utils.getString(context, 'warning_dialog__email_format'));
             }

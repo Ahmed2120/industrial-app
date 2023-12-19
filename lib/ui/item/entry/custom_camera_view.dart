@@ -211,7 +211,7 @@ class _CustomCameraViewState extends State<CustomCameraView>
               behavior: HitTestBehavior.opaque,
               onScaleStart: _handleScaleStart,
               onScaleUpdate: _handleScaleUpdate,
-              onTapDown: ( details) =>
+              onTapDown: (TapDownDetails details) =>
                   onViewFinderTap(details, constraints),
             );
           }),

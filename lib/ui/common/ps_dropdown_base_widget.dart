@@ -33,26 +33,23 @@ class PsDropdownBaseWidget extends StatelessWidget {
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(PsDimens.space14),
-          child: InkWell(
-            onTap: onTap as void Function()?,
-            borderRadius: BorderRadius.circular(PsDimens.space10),
-            child: Container(
-              width: double.infinity,
-              height: PsDimens.space44,
-              margin: const EdgeInsets.all(PsDimens.space2),
-              decoration: BoxDecoration(
-                color: PsColors.cardBackgroundColor,
-                borderRadius: BorderRadius.circular(PsDimens.space10),
-                border: Border.all(color: PsColors.mainDividerColor),
-              ),
-              // child: Ink(
-              //   color: PsColors.primary50,
+        InkWell(
+          onTap: onTap as void Function()?,
+          child: Container(
+            width: double.infinity,
+            height: PsDimens.space44,
+            margin: const EdgeInsets.all(PsDimens.space12),
+            decoration: BoxDecoration(
+              color: PsColors.cardBackgroundColor,
+              borderRadius: BorderRadius.circular(PsDimens.space10),
+              border: Border.all(color: PsColors.mainDividerColor),
+            ),
+            // child: Ink(
+            //   color: PsColors.primary50,
               child: Container(
-                // margin: const EdgeInsets.all(PsDimens.space12),
+                margin: const EdgeInsets.all(PsDimens.space12),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
                     Expanded(
@@ -60,11 +57,10 @@ class PsDropdownBaseWidget extends StatelessWidget {
                         child: Ink(
                           color: PsColors.primary50,
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children:<Widget> [
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: PsDimens.space16),
+                                padding:const EdgeInsets.only(left: PsDimens.space80),
                                 child: Text(
                                   selectedText == ''
                                       ? Utils.getString(
@@ -76,10 +72,7 @@ class PsDropdownBaseWidget extends StatelessWidget {
                                           .textTheme
                                           .bodyLarge!
                                           .copyWith(
-                                              color: Utils.isLightMode(context)
-                                                  ? PsColors
-                                                      .textPrimaryLightColor
-                                                  : PsColors.textColor3)
+                                              color: Utils.isLightMode(context) ? PsColors.textPrimaryLightColor : PsColors.textColor3)
                                       : Theme.of(context).textTheme.bodyLarge,
                                 ),
                               ),
@@ -89,17 +82,15 @@ class PsDropdownBaseWidget extends StatelessWidget {
                       ),
                     ),
                     const Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: PsDimens.space16),
-                      child: Icon(
+                      padding:  EdgeInsets.only(right: PsDimens.space40),
+                      child:  Icon(
                         Icons.arrow_drop_down,
                       ),
                     ),
                   ],
                 ),
               ),
-              // ),
-            ),
+           // ),
           ),
         ),
       ],

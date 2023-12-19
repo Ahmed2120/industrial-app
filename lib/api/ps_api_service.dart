@@ -208,28 +208,32 @@ class PsApiService extends PsApi {
         'platform_name', platformName, imageFile);
   }
 
-    Future<PsResource<DefaultPhoto>> postVideoUpload(
+  Future<PsResource<DefaultPhoto>> postVideoUpload(
       String itemId, String videoId, File imageFile, String loginUserId) async {
-    final String url = '${PsUrl.ps_video_upload_url}/login_user_id/$loginUserId';
+    final String url =
+        '${PsUrl.ps_video_upload_url}/login_user_id/$loginUserId';
 
     return await postUploadImage<DefaultPhoto, DefaultPhoto>(
         DefaultPhoto(), url, 'item_id', itemId, 'img_id', videoId, imageFile);
   }
 
-      Future<PsResource<DefaultPhoto>> postVideoThumbnailUpload(
+  Future<PsResource<DefaultPhoto>> postVideoThumbnailUpload(
       String itemId, String videoId, File imageFile, String loginUserId) async {
-    final String url = '${PsUrl.ps_video_thumbnail_upload_url}/login_user_id/$loginUserId';
+    final String url =
+        '${PsUrl.ps_video_thumbnail_upload_url}/login_user_id/$loginUserId';
 
     return await postUploadImage<DefaultPhoto, DefaultPhoto>(
         DefaultPhoto(), url, 'item_id', itemId, 'img_id', videoId, imageFile);
   }
-
-
 
   Future<PsResource<DefaultPhoto>> postItemImageUpload(
-      String itemId, String? imgId, String ordering, File imageFile, String loginUserId) async {
-    final String url = '${PsUrl.ps_item_image_upload_url}/login_user_id/$loginUserId';
-
+      String itemId,
+      String? imgId,
+      String ordering,
+      File imageFile,
+      String loginUserId) async {
+    final String url =
+        '${PsUrl.ps_item_image_upload_url}/login_user_id/$loginUserId';
     return await postUploadItemImage<DefaultPhoto, DefaultPhoto>(
         DefaultPhoto(),
         url,
@@ -246,8 +250,7 @@ class PsApiService extends PsApi {
   /// Image Reorder
   ///
   Future<PsResource<ApiStatus>> postReorderImages(
-    List<Map<dynamic, dynamic>> jsonMap, String? loginUserId
-  ) async {
+      List<Map<dynamic, dynamic>> jsonMap, String? loginUserId) async {
     final String url =
         '${PsUrl.ps_item_reorder_image_upload_url}/api_key/${PsConfig.ps_api_key}/login_user_id/$loginUserId';
 
@@ -317,11 +320,14 @@ class PsApiService extends PsApi {
   /// Item List From Follower
   ///
   Future<PsResource<List<Product>>> getAllItemListFromFollower(
-       Map<dynamic, dynamic> jsonMap, String? loginUserId, int limit, int? offset) async {
+      Map<dynamic, dynamic> jsonMap,
+      String? loginUserId,
+      int limit,
+      int? offset) async {
     final String url =
         '${PsUrl.ps_item_list_from_followers_url}/api_key/${PsConfig.ps_api_key}/login_user_id/$loginUserId/limit/$limit/offset/$offset';
 
-    return await postData<Product, List<Product>>(Product(), url,jsonMap);
+    return await postData<Product, List<Product>>(Product(), url, jsonMap);
   }
 
   ///
@@ -421,7 +427,7 @@ class PsApiService extends PsApi {
   }
 
   Future<PsResource<List<SubCategory>>> getAllSubCategoryList(
-      Map<dynamic, dynamic> jsonMap,String loginUserId) async {
+      Map<dynamic, dynamic> jsonMap, String loginUserId) async {
     final String url =
         '${PsUrl.ps_subCategory_url}/api_key/${PsConfig.ps_api_key}/login_user_id/$loginUserId';
 
@@ -521,8 +527,7 @@ class PsApiService extends PsApi {
   Future<PsResource<ApiStatus>> postSubCategorySubscribe(
     Map<dynamic, dynamic> jsonMap,
   ) async {
-    const String url =
-        '${PsUrl.ps__sub_category_subscribe_url}';
+    const String url = '${PsUrl.ps__sub_category_subscribe_url}';
 
     return await postData<ApiStatus, ApiStatus>(ApiStatus(), url, jsonMap);
   }
@@ -534,7 +539,6 @@ class PsApiService extends PsApi {
       Map<dynamic, dynamic> jsonMap, int limit, int? offset) async {
     final String url =
         '${PsUrl.ps_search_user_url}/api_key/${PsConfig.ps_api_key}/limit/$limit/offset/$offset';
-
     return await postData<User, List<User>>(User(), url, jsonMap);
   }
 
@@ -561,10 +565,8 @@ class PsApiService extends PsApi {
   ///Blog
   ///
 
-
   Future<PsResource<List<Blog>>> getBlogList(Map<dynamic, dynamic> paramMap,
-      String loginUserId,int limit, int? offset) async {
-
+      String loginUserId, int limit, int? offset) async {
     final String url =
         '${PsUrl.ps_bloglist_url}/api_key/${PsConfig.ps_api_key}/limit/$limit/offset/$offset/login_user_id/$loginUserId';
 
@@ -678,6 +680,7 @@ class PsApiService extends PsApi {
   Future<PsResource<Product>> postItemEntry(
       Map<dynamic, dynamic> jsonMap, String loginUserId) async {
     final String url = '${PsUrl.ps_item_entry_url}/login_user_id/$loginUserId';
+    print(url);
     return await postData<Product, Product>(Product(), url, jsonMap);
   }
 
@@ -882,7 +885,6 @@ class PsApiService extends PsApi {
     return await postData<ApiStatus, ApiStatus>(ApiStatus(), url, jsonMap);
   }
 
-
   ///
   /// User Report Item
   ///
@@ -928,14 +930,15 @@ class PsApiService extends PsApi {
     return await postData<ApiStatus, ApiStatus>(ApiStatus(), url, jsonMap);
   }
 
-
   ///
   /// Buy Ad Post Package detail
   ///
-  Future<PsResource<List<PackageTransaction>>> getPackageTransactionDetailList(Map<dynamic, dynamic> jsonMap,
-     ) async {
+  Future<PsResource<List<PackageTransaction>>> getPackageTransactionDetailList(
+    Map<dynamic, dynamic> jsonMap,
+  ) async {
     const String url = '${PsUrl.ps_buy_post_packgage_transaction_detail}';
-    return await postData<PackageTransaction, List<PackageTransaction>>(PackageTransaction(), url,jsonMap);
+    return await postData<PackageTransaction, List<PackageTransaction>>(
+        PackageTransaction(), url, jsonMap);
   }
 
   ///
@@ -967,18 +970,19 @@ class PsApiService extends PsApi {
         UserUnreadMessage(), url, jsonMap);
   }
 
-    ///
+  ///
   /// Chat Image Upload
   ///
 
   Future<PsResource<DefaultPhoto>> postChatImageUpload(
-      String senderId,
-      String sellerUserId,
-      String buyerUserId,
-      String itemId,
-      String type,
-      File imageFile,
-      String isUserOnline,) async {
+    String senderId,
+    String sellerUserId,
+    String buyerUserId,
+    String itemId,
+    String type,
+    File imageFile,
+    String isUserOnline,
+  ) async {
     const String url = '${PsUrl.ps_chat_image_upload_url}';
 
     return postUploadChatImage<DefaultPhoto, DefaultPhoto>(
@@ -1017,16 +1021,14 @@ class PsApiService extends PsApi {
     return await postData<ApiStatus, ApiStatus>(ApiStatus(), url, jsonMap);
   }
 
-
   ///
   /// Sold out item
   ///
   Future<PsResource<List<Product>>> getSoldOutItemList(
-      int limit, int? offset,String loginUserId) async {
+      int limit, int? offset, String loginUserId) async {
     final String url =
         '${PsUrl.ps_sold_out_item_url}/limit/$limit/offset/$offset/login_user_id/$loginUserId';
 
-    return await getServerCall<Product, List<Product>>(
-        Product(), url);
+    return await getServerCall<Product, List<Product>>(Product(), url);
   }
 }

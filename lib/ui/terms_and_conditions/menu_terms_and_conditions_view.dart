@@ -103,7 +103,6 @@ class _MenuTermsAndConditionViewState extends State<MenuTermsAndConditionView> {
                   //     );
                   //   },
                   // },
-
                   // ignore: always_specify_types
                   //   style: {
                   //   '#': Style(

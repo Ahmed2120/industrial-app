@@ -40,18 +40,24 @@ class SearchUserVerticalListItem extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             height: PsDimens.space88,
             decoration: BoxDecoration(
-            color: PsColors.cardBackgroundColor,
-            borderRadius:
-                const BorderRadius.all(Radius.circular(PsDimens.space10)),
-              ),
-            margin: const EdgeInsets.only(bottom: PsDimens.space12,left: PsDimens.space14,right: PsDimens.space14),
+              color: PsColors.cardBackgroundColor,
+              borderRadius:
+                  const BorderRadius.all(Radius.circular(PsDimens.space10)),
+            ),
+            margin: const EdgeInsets.only(
+                bottom: PsDimens.space12,
+                left: PsDimens.space14,
+                right: PsDimens.space14),
             child: Padding(
-                  padding: const EdgeInsets.only(
-                    top:PsDimens.space4, bottom: PsDimens.space4, 
-                    left: PsDimens.space16, right: PsDimens.space12),
-                  child: UserWidget(user: user, currentUser: currentUser, onFollowBtnTap: onFollowBtnTap)
-                  ),
-            
+                padding: const EdgeInsets.only(
+                    top: PsDimens.space4,
+                    bottom: PsDimens.space4,
+                    left: PsDimens.space16,
+                    right: PsDimens.space12),
+                child: UserWidget(
+                    user: user,
+                    currentUser: currentUser,
+                    onFollowBtnTap: onFollowBtnTap)),
           ),
         ),
         builder: (BuildContext context, Widget? child) {
@@ -107,7 +113,6 @@ class UserWidget extends StatelessWidget {
             // width: PsDimens.space76,
             // height: PsDimens.space80,
             boxfit: BoxFit.cover,
-            
           ),
         ),
         const SizedBox(
@@ -122,14 +127,15 @@ class UserWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Flexible(
-                   child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 4.0),
-                      child: Text(
-                          user?.userName == ''
-                              ? Utils.getString(context, 'default__user_name')
-                              : user?.userName ?? '',
-                          style: Theme.of(context).textTheme.titleMedium),
-                    )),
+                      child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 8.0, right: 8.0, bottom: 4.0),
+                    child: Text(
+                        user?.userName == ''
+                            ? Utils.getString(context, 'default__user_name')
+                            : user?.userName ?? '',
+                        style: Theme.of(context).textTheme.titleMedium),
+                  )),
                   if (user?.isVerifyBlueMark == PsConst.ONE)
                     Container(
                       margin: const EdgeInsets.only(left: PsDimens.space2),
@@ -142,22 +148,22 @@ class UserWidget extends StatelessWidget {
                 ],
               ),
               if (user!.userAboutMe != '')
-              Flexible(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                  child: Text(
-                            user!.userAboutMe!,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            color: PsColors.textColor2
-                  )),
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                    child: Text(user!.userAboutMe!,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyLarge!
+                            .copyWith(color: PsColors.textColor2)),
+                  ),
                 ),
-              ),
               _RatingWidget(
                 data: user!,
               ),
-              
+
               // _spacingWidget,
               // Text(
               //   '${Utils.getString(context, 'user_detail__joined')} - ${Utils.getDateFormat(user!.addedDate)}',
@@ -170,21 +176,21 @@ class UserWidget extends StatelessWidget {
         Visibility(
           visible: currentUser != user!.userId,
           child: MaterialButton(
-          color: PsColors.buttonColor,
-          height: 32,
-          shape: const RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.all(Radius.circular(PsDimens.space8)),
-          ),
-
-          onPressed: onFollowBtnTap as void Function()?,
-          child: Text(
-            user!.isFollowed == PsConst.ZERO ? Utils.getString(context, 'profile__follow') : Utils.getString(context, 'profile__following'),
-            style: Theme.of(context)
-                .textTheme
-                .labelLarge!
-                .copyWith(color: Colors.white),
-          ),
+            color: PsColors.buttonColor,
+            height: 32,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(PsDimens.space8)),
+            ),
+            onPressed: onFollowBtnTap as void Function()?,
+            child: Text(
+              user!.isFollowed == PsConst.ZERO
+                  ? Utils.getString(context, 'profile__follow')
+                  : Utils.getString(context, 'profile__following'),
+              style: Theme.of(context)
+                  .textTheme
+                  .labelLarge!
+                  .copyWith(color: Colors.black),
+            ),
           ),
         )
       ],

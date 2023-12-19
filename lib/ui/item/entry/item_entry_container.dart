@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutterbuyandsell/config/ps_colors.dart';
@@ -60,19 +58,22 @@ class ItemEntryContainerViewState extends State<ItemEntryContainerView>
       onWillPop: _requestPop,
       child: Scaffold(
         appBar: AppBar(
-            systemOverlayStyle:  SystemUiOverlayStyle(
-           statusBarIconBrightness: Utils.getBrightnessForAppBar(context),
-         ),  
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarIconBrightness: Utils.getBrightnessForAppBar(context),
+          ),
           backgroundColor: PsColors.backgroundColor,
-          iconTheme: Theme.of(context)
-              .iconTheme
-              .copyWith(color: Utils.isLightMode(context)? PsColors.primary500: PsColors.primaryDarkWhite),
+          iconTheme: Theme.of(context).iconTheme.copyWith(
+              color: Utils.isLightMode(context)
+                  ? PsColors.primary500
+                  : PsColors.primaryDarkWhite),
           title: Text(
             Utils.getString(context, 'item_entry__listing_entry'),
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.titleLarge!.copyWith(
                 fontWeight: FontWeight.bold,
-                color: Utils.isLightMode(context)? PsColors.primary500: PsColors.primaryDarkWhite),
+                color: Utils.isLightMode(context)
+                    ? PsColors.primary500
+                    : PsColors.primaryDarkWhite),
           ),
           elevation: 0,
         ),

@@ -145,9 +145,9 @@ abstract class PsDao<T extends PsObject<T>> {
         result = localObj;
         break;
       }
-     if (onDataUpdated != null) {
-            onDataUpdated(result);
-     }
+      if (onDataUpdated != null) {
+        onDataUpdated(result);
+      }
     });
 
     return subscription;
@@ -170,9 +170,9 @@ abstract class PsDao<T extends PsObject<T>> {
         resultList.add(localObj);
       });
 
-     if (onDataUpdated != null) {
-            onDataUpdated(resultList);
-     }
+      if (onDataUpdated != null) {
+        onDataUpdated(resultList);
+      }
     });
 
     return subscription;
@@ -226,10 +226,9 @@ abstract class PsDao<T extends PsObject<T>> {
           }
         }
       }
-      if(onDataUpdated != null){
-      onDataUpdated(PsResource<List<T>>(status, '', resultList));
+      if (onDataUpdated != null) {
+        onDataUpdated(PsResource<List<T>>(status, '', resultList));
       }
-
     });
     return subscription;
   }

@@ -105,7 +105,6 @@ class _SettingTermsAndConditionState extends State<SettingTermsAndCondition>
                   //     );
                   //   },
                   // },
-
                   // ignore: always_specify_types
                   //   style: {
                   //   '#': Style(

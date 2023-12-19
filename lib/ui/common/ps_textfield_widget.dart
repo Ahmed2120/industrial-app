@@ -86,7 +86,6 @@ class PsTextFieldWidget extends StatelessWidget {
                     ? InputDecoration(
                         contentPadding: const EdgeInsets.only(
                           left: PsDimens.space12,
-                          right: PsDimens.space12,
                           bottom: PsDimens.space8,
                           top: PsDimens.space10,
                         ),

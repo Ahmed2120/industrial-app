@@ -1,5 +1,3 @@
-
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterbuyandsell/config/ps_colors.dart';
@@ -136,10 +134,10 @@ class _BlogSliderState extends State<BlogSliderView> {
                             margin: const EdgeInsets.symmetric(
                                 vertical: 10.0, horizontal: 2.0),
                             decoration: BoxDecoration(
-                               border:Border.all(
-                               color: Utils.isLightMode(context)
-                                  ? PsColors.primary500
-                                  : Colors.black87),
+                                border: Border.all(
+                                    color: Utils.isLightMode(context)
+                                        ? PsColors.primary500
+                                        : Colors.black87),
                                 shape: BoxShape.circle,
                                 color: _currentId == blogProduct.id
                                     ? PsColors.buttonColor

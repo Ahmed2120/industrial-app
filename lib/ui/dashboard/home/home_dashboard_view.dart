@@ -110,8 +110,6 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
     super.dispose();
   }
 
-  
-
   final RateMyApp _rateMyApp = RateMyApp(
       preferencesPrefix: 'rateMyApp_',
       minDays: 0,
@@ -122,8 +120,7 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
   @override
   void initState() {
     super.initState();
-  WidgetsBinding.instance.addPostFrameCallback((_) => initPlugin());
-
+    WidgetsBinding.instance.addPostFrameCallback((_) => initPlugin());
 
     if (Platform.isAndroid) {
       _rateMyApp.init().then((_) {
@@ -226,8 +223,8 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
     properties.add(StringProperty('_authStatus', _authStatus));
   }
 
-    String _authStatus = 'Unknown';
-   Future<void> initPlugin() async {
+  String _authStatus = 'Unknown';
+  Future<void> initPlugin() async {
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       final TrackingStatus status =
@@ -235,15 +232,16 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
       setState(() => _authStatus = '$status');
       // If the system can show an authorization request dialog
       if (status == TrackingStatus.notDetermined) {
-         final TrackingStatus status =
-              await AppTrackingTransparency.requestTrackingAuthorization();
-          setState(() => _authStatus = '$status');
-        }
+        final TrackingStatus status =
+            await AppTrackingTransparency.requestTrackingAuthorization();
+        setState(() => _authStatus = '$status');
+      }
     } on PlatformException {
       setState(() => _authStatus = 'PlatformException was thrown');
     }
 
-    final String uuid = await AppTrackingTransparency.getAdvertisingIdentifier();
+    final String uuid =
+        await AppTrackingTransparency.getAdvertisingIdentifier();
     print('UUID: $uuid');
   }
 
@@ -267,60 +265,72 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
               create: (BuildContext context) {
                 _nearestProductProvider = NearestProductProvider(
                     repo: repo2, limit: valueHolder!.recentItemLoadingLimit!);
-                    final String? loginUserId = Utils.checkUserLoginId(valueHolder!);
-              Geolocator.checkPermission().then((LocationPermission permission) {
-                if (permission == LocationPermission.denied) {
-                  Geolocator.requestPermission().then((LocationPermission permission) {
+                final String? loginUserId =
+                    Utils.checkUserLoginId(valueHolder!);
+                print('---==>> 🥎🥎 $loginUserId');
+                Geolocator.checkPermission()
+                    .then((LocationPermission permission) {
+                  if (permission == LocationPermission.denied) {
+                    Geolocator.requestPermission()
+                        .then((LocationPermission permission) {
                       if (permission == LocationPermission.denied) {
                         //permission denied, do nothing
                       } else {
-                      Geolocator.getCurrentPosition(
-                        desiredAccuracy: LocationAccuracy.medium,
-                        forceAndroidLocationManager: !androidFusedLocation)
-                    .then((Position position) {
-                  if (mounted) {
-                    setState(() {
-                      _currentPosition = position;
-                    });
-                    _nearestProductProvider?.productNearestParameterHolder.lat =
-                        _currentPosition?.latitude.toString();
-                    _nearestProductProvider?.productNearestParameterHolder.lng =
-                        _currentPosition?.longitude.toString();
-                    _nearestProductProvider
-                        ?.productNearestParameterHolder.mile = valueHolder!.mile;
-                    _nearestProductProvider?.resetProductList(loginUserId!,
-                      _nearestProductProvider!.productNearestParameterHolder,
-                    );
-                  }
-                }).catchError((Object e) {
-                  //
-                });
+                        Geolocator.getCurrentPosition(
+                                desiredAccuracy: LocationAccuracy.medium,
+                                forceAndroidLocationManager:
+                                    !androidFusedLocation)
+                            .then((Position position) {
+                          if (mounted) {
+                            setState(() {
+                              _currentPosition = position;
+                            });
+                            _nearestProductProvider
+                                ?.productNearestParameterHolder
+                                .lat = _currentPosition?.latitude.toString();
+                            _nearestProductProvider
+                                ?.productNearestParameterHolder
+                                .lng = _currentPosition?.longitude.toString();
+                            _nearestProductProvider
+                                ?.productNearestParameterHolder
+                                .mile = valueHolder!.mile;
+                            _nearestProductProvider?.resetProductList(
+                              loginUserId!,
+                              _nearestProductProvider!
+                                  .productNearestParameterHolder,
+                            );
+                          }
+                        }).catchError((Object e) {
+                          //
+                        });
                       }
-                  });
-                } else {
-                  Geolocator.getCurrentPosition(
-                        desiredAccuracy: LocationAccuracy.medium,
-                        forceAndroidLocationManager: !androidFusedLocation)
-                    .then((Position position) {
-                  if (mounted) {
-                    setState(() {
-                      _currentPosition = position;
                     });
-                    _nearestProductProvider?.productNearestParameterHolder.lat =
-                        _currentPosition?.latitude.toString();
-                    _nearestProductProvider?.productNearestParameterHolder.lng =
-                        _currentPosition?.longitude.toString();
-                    _nearestProductProvider
-                        ?.productNearestParameterHolder.mile = valueHolder!.mile;
-                    _nearestProductProvider?.resetProductList(loginUserId!,
-                      _nearestProductProvider!.productNearestParameterHolder,
-                    );
+                  } else {
+                    Geolocator.getCurrentPosition(
+                            desiredAccuracy: LocationAccuracy.medium,
+                            forceAndroidLocationManager: !androidFusedLocation)
+                        .then((Position position) {
+                      if (mounted) {
+                        setState(() {
+                          _currentPosition = position;
+                        });
+                        _nearestProductProvider?.productNearestParameterHolder
+                            .lat = _currentPosition?.latitude.toString();
+                        _nearestProductProvider?.productNearestParameterHolder
+                            .lng = _currentPosition?.longitude.toString();
+                        _nearestProductProvider?.productNearestParameterHolder
+                            .mile = valueHolder!.mile;
+                        _nearestProductProvider?.resetProductList(
+                          loginUserId!,
+                          _nearestProductProvider!
+                              .productNearestParameterHolder,
+                        );
+                      }
+                    }).catchError((Object e) {
+                      //
+                    });
                   }
-                }).catchError((Object e) {
-                  //
                 });
-                }
-              });
                 return _nearestProductProvider!;
               }),
           ChangeNotifierProvider<CategoryProvider>(
@@ -355,7 +365,8 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
               create: (BuildContext context) {
                 _recentProductProvider = RecentProductProvider(
                     repo: repo2, limit: valueHolder!.recentItemLoadingLimit!);
-                _recentProductProvider!.productRecentParameterHolder.mile = valueHolder!.mile;    
+                _recentProductProvider!.productRecentParameterHolder.mile =
+                    valueHolder!.mile;
                 _recentProductProvider!.productRecentParameterHolder
                     .itemLocationId = valueHolder!.locationId;
                 _recentProductProvider!.productRecentParameterHolder
@@ -378,7 +389,8 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
               create: (BuildContext context) {
                 _popularProductProvider = PopularProductProvider(
                     repo: repo2, limit: valueHolder!.populartItemLoadingLimit!);
-                _popularProductProvider!.productPopularParameterHolder.mile = valueHolder!.mile;    
+                _popularProductProvider!.productPopularParameterHolder.mile =
+                    valueHolder!.mile;
                 _popularProductProvider!.productPopularParameterHolder
                     .itemLocationId = valueHolder!.locationId;
                 _popularProductProvider!.productPopularParameterHolder
@@ -401,8 +413,8 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
               create: (BuildContext context) {
                 _discountProductProvider = DiscountProductProvider(
                     repo: repo2, limit: valueHolder!.discountItemLoadingLimit!);
-                _discountProductProvider!.productDiscountParameterHolder
-                    .mile = valueHolder!.mile;
+                _discountProductProvider!.productDiscountParameterHolder.mile =
+                    valueHolder!.mile;
                 _discountProductProvider!.productDiscountParameterHolder
                     .itemLocationId = valueHolder!.locationId;
                 _discountProductProvider!.productDiscountParameterHolder
@@ -419,13 +431,14 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
                 _discountProductProvider!.loadProductList(loginUserId,
                     _discountProductProvider!.productDiscountParameterHolder);
                 return _discountProductProvider!;
-              }),    
+              }),
           ChangeNotifierProvider<PaidAdProductProvider?>(
               lazy: false,
               create: (BuildContext context) {
                 _paidAdItemProvider = PaidAdProductProvider(
                     repo: repo2, limit: valueHolder!.featuredItemLoadingLimit!);
-                _paidAdItemProvider!.productPaidAdParameterHolder.mile = valueHolder!.mile;    
+                _paidAdItemProvider!.productPaidAdParameterHolder.mile =
+                    valueHolder!.mile;
                 _paidAdItemProvider!.productPaidAdParameterHolder
                     .itemLocationId = valueHolder!.locationId;
                 _paidAdItemProvider!.productPaidAdParameterHolder
@@ -482,16 +495,18 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
                     repo: repo2,
                     psValueHolder: valueHolder,
                     limit: valueHolder!.followerItemLoadingLimit!);
-                
+
                 _itemListFromFollowersProvider!.followUserItemParameterHolder
-                      .itemLocationId = valueHolder!.locationId;
+                    .itemLocationId = valueHolder!.locationId;
                 if (valueHolder!.isSubLocation == PsConst.ONE) {
                   _itemListFromFollowersProvider!.followUserItemParameterHolder
                       .itemLocationTownshipId = valueHolder!.locationTownshipId;
-                }     
+                }
 
                 _itemListFromFollowersProvider!.loadItemListFromFollowersList(
-                  _itemListFromFollowersProvider!.followUserItemParameterHolder.toMap(),
+                    _itemListFromFollowersProvider!
+                        .followUserItemParameterHolder
+                        .toMap(),
                     Utils.checkUserLoginId(
                         _itemListFromFollowersProvider!.psValueHolder!));
                 return _itemListFromFollowersProvider;
@@ -584,7 +599,6 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
 
           // FloatingActionButton(child: Icon(Icons.add), onPressed: () {}),
           body: Container(
-            
             child: RefreshIndicator(
                 onRefresh: () {
                   final String? loginUserId =
@@ -596,14 +610,14 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
                       _popularProductProvider!.productPopularParameterHolder);
 
                   _discountProductProvider!.resetProductList(loginUserId,
-                      _discountProductProvider!.productDiscountParameterHolder);    
+                      _discountProductProvider!.productDiscountParameterHolder);
 
                   _nearestProductProvider!.resetProductList(loginUserId!,
                       _nearestProductProvider!.productNearestParameterHolder);
 
                   _paidAdItemProvider!.resetProductList(loginUserId,
                       _paidAdItemProvider!.productPaidAdParameterHolder);
-                                            
+
                   _blogProvider!.resetBlogList(
                       loginUserId, _blogProvider!.blogParameterHolder);
 
@@ -614,8 +628,12 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
                   }
 
                   _itemListFromFollowersProvider!
-                      .resetItemListFromFollowersList( _itemListFromFollowersProvider!.followUserItemParameterHolder.toMap(),Utils.checkUserLoginId(
-                          _itemListFromFollowersProvider!.psValueHolder!));
+                      .resetItemListFromFollowersList(
+                          _itemListFromFollowersProvider!
+                              .followUserItemParameterHolder
+                              .toMap(),
+                          Utils.checkUserLoginId(
+                              _itemListFromFollowersProvider!.psValueHolder!));
 
                   return _categoryProvider!
                       .resetCategoryList(
@@ -640,7 +658,6 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
                   scrollDirection: Axis.vertical,
                   controller: widget.scrollController,
                   slivers: <Widget>[
-
                     _HomeHeaderWidget(
                       animationController:
                           widget.animationController, //animationController,
@@ -672,7 +689,6 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
                               curve: Interval((1 / count) * 2, 1.0,
                                   curve: Curves.fastOutSlowIn))), //animation
                     ),
-
                     RecentProductHorizontalListWidget(
                       psValueHolder: valueHolder,
                       animationController:
@@ -722,8 +738,6 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
                               curve: Interval((1 / count) * 4, 1.0,
                                   curve: Curves.fastOutSlowIn))),
                     ),
-
-
                     _HomeItemListFromFollowersHorizontalListWidget(
                       animationController:
                           widget.animationController, //animationController,
@@ -764,16 +778,16 @@ class _HomeBlogProductSliderListWidget extends StatelessWidget {
           (BuildContext context, BlogProvider blogProvider, Widget? child) {
         return AnimatedBuilder(
             animation: animationController!,
-            child:Container(
-                        width: double.infinity,
-                        child: BlogSliderView(
-                          blogList: blogProvider.blogList.data,
-                          onTap: (Blog blog) {
-                            Navigator.pushNamed(context, RoutePaths.blogDetail,
-                                arguments: blog);
-                          },
-                        ),
-                      ),
+            child: Container(
+              width: double.infinity,
+              child: BlogSliderView(
+                blogList: blogProvider.blogList.data,
+                onTap: (Blog blog) {
+                  Navigator.pushNamed(context, RoutePaths.blogDetail,
+                      arguments: blog);
+                },
+              ),
+            ),
             builder: (BuildContext context, Widget? child) {
               return FadeTransition(
                   opacity: animation,
@@ -819,8 +833,7 @@ class __HomeCategoryHorizontalListWidgetState
                     MyHeaderWidget(
                       headerName:
                           Utils.getString(context, 'Are you looking for'),
-                      headerDescription:
-                          '',
+                      headerDescription: '',
                       viewAllClicked: () {
                         Navigator.pushNamed(context, RoutePaths.categoryList,
                             arguments: 'Categories');
@@ -831,8 +844,8 @@ class __HomeCategoryHorizontalListWidgetState
                       width: MediaQuery.of(context).size.width,
                       child: ListView.builder(
                           shrinkWrap: true,
-                          padding:
-                              const EdgeInsets.only(left: PsDimens.space8, right: PsDimens.space8),
+                          padding: const EdgeInsets.only(
+                              left: PsDimens.space8, right: PsDimens.space8),
                           scrollDirection: Axis.horizontal,
                           itemCount: categoryProvider.categoryList.data!.length,
                           itemBuilder: (BuildContext context, int index) {
@@ -849,8 +862,8 @@ class __HomeCategoryHorizontalListWidgetState
                                 category:
                                     categoryProvider.categoryList.data![index],
                                 onTap: () {
-
-                                  if (Utils.showUI(widget.psValueHolder!.subCatId)) {
+                                  if (Utils.showUI(
+                                      widget.psValueHolder!.subCatId)) {
                                     Navigator.pushNamed(
                                         context, RoutePaths.subCategoryGrid,
                                         arguments: categoryProvider
@@ -864,7 +877,8 @@ class __HomeCategoryHorizontalListWidgetState
                                         productParameterHolder =
                                         ProductParameterHolder()
                                             .getLatestParameterHolder();
-                                    productParameterHolder.mile = widget.psValueHolder!.mile;        
+                                    productParameterHolder.mile =
+                                        widget.psValueHolder!.mile;
                                     productParameterHolder.catId =
                                         categoryProvider
                                             .categoryList.data![index].catId;
@@ -948,15 +962,14 @@ class _HomeItemListFromFollowersHorizontalListWidget extends StatelessWidget {
                             context, 'dashboard__item_list_from_followers'),
                         headerDescription: '',
                         viewAllClicked: () {
-
                           Navigator.pushNamed(
                               context, RoutePaths.itemListFromFollower,
-                                  arguments: <String, dynamic>{
-                                        'userId': itemListFromFollowersProvider
-                                  .psValueHolder!.loginUserId,
-                                        'holder': itemListFromFollowersProvider.followUserItemParameterHolder
-                                      }
-                                  );
+                              arguments: <String, dynamic>{
+                                'userId': itemListFromFollowersProvider
+                                    .psValueHolder!.loginUserId,
+                                'holder': itemListFromFollowersProvider
+                                    .followUserItemParameterHolder
+                              });
                         },
                       ),
                       Container(
@@ -1134,29 +1147,29 @@ class __MyHomeHeaderWidgetState extends State<_MyHomeHeaderWidget> {
         //     right: PsDimens.space20,
         //     bottom: PsDimens.space4,
         //   ),
-         // child: 
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: <Widget>[
-              // Flexible(
-              //   child: Text(
-              //     Utils.getString(context, 'app_name'),
-              //     maxLines: 1,
-              //     overflow: TextOverflow.ellipsis,
-              //     style: Theme.of(context)
-              //         .textTheme
-              //         .headline5!
-              //         .copyWith(color: PsColors.textPrimaryDarkColor),
-              //   ),
-              // ),
-              // const SizedBox(width: PsDimens.space20),
-              // Text(
-              //   Utils.getString(context, 'dashboard__your_location'),
-              //   style: Theme.of(context).textTheme.bodyText1,
-              // ),
-          //   ],
-          // ),
-       // ),
+        // child:
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: <Widget>[
+        // Flexible(
+        //   child: Text(
+        //     Utils.getString(context, 'app_name'),
+        //     maxLines: 1,
+        //     overflow: TextOverflow.ellipsis,
+        //     style: Theme.of(context)
+        //         .textTheme
+        //         .headline5!
+        //         .copyWith(color: PsColors.textPrimaryDarkColor),
+        //   ),
+        // ),
+        // const SizedBox(width: PsDimens.space20),
+        // Text(
+        //   Utils.getString(context, 'dashboard__your_location'),
+        //   style: Theme.of(context).textTheme.bodyText1,
+        // ),
+        //   ],
+        // ),
+        // ),
         // Padding(
         //   padding: const EdgeInsets.only(
         //       left: PsDimens.space20,
@@ -1194,7 +1207,7 @@ class __MyHomeHeaderWidgetState extends State<_MyHomeHeaderWidget> {
         // ),
         Padding(
           padding: const EdgeInsets.only(
-             // top: PsDimens.space24, 
+              // top: PsDimens.space24,
               bottom: PsDimens.space10),
           child: PsTextFieldWidgetWithIcon(
               hintText: Utils.getString(context, 'home__bottom_app_bar_search'),

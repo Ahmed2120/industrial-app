@@ -360,6 +360,24 @@ class __CardWidgetState extends State<_TextFieldAndSignInButtonWidget> {
             },
           ),
         ),
+        const SizedBox(
+          height: PsDimens.space8,
+        ),
+        Container(
+          height: 50,
+          margin: const EdgeInsets.only(
+              left: PsDimens.space32, right: PsDimens.space32),
+          child: PSButtonWidget(
+            colorData: PsColors.bluemarkColor,
+            hasShadow: false,
+            width: double.infinity,
+            titleText: Utils.getString(context, 'guest'),
+            onPressed: () async {
+              Navigator.pushReplacementNamed(
+                  context, RoutePaths.languagesetting);
+            },
+          ),
+        ),
       ],
     );
   }

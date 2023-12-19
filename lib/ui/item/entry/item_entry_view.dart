@@ -58,6 +58,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart' as googlemap;
+import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 // import 'package:image_picker/image_picker.dart';
 import 'package:latlong2/latlong.dart';
@@ -575,215 +576,210 @@ class _ItemEntryViewState extends State<ItemEntryView> {
               return Container(
                 color: PsColors.coreBackgroundColor,
               );
-            if (widget.flag == PsConst.EDIT_ITEM ||
-                (valueHolder!.isPaidApp != PsConst.ONE ||
-                    (provider.user.data != null &&
-                        int.parse(provider.user.data!.remainingPost!) > 0)))
-              return SingleChildScrollView(
-                child: AnimatedBuilder(
-                    animation: widget.animationController!,
-                    child: Container(
-                      color: PsColors.baseColor,
-                      padding:
-                          const EdgeInsets.only(left: 10.0, right: 10, top: 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Consumer<GalleryProvider>(builder:
-                              (BuildContext context, GalleryProvider provider,
-                                  Widget? child) {
-                            if (bindImageFirstTime &&
-                                provider.galleryList.data!.isNotEmpty) {
-                              for (int i = 0;
-                                  i < widget.maxImageCount &&
-                                      i < provider.galleryList.data!.length;
-                                  i++) {
-                                if (provider.galleryList.data![i].imgId !=
-                                    null) {
-                                  uploadedImages[i] =
-                                      provider.galleryList.data![i];
-                                }
-                              }
-                              bindImageFirstTime = false;
-                            }
-
-                            //  if (Utils.showUI(valueHolder!.image))
-                            return ImageUploadHorizontalList(
-                              flag: widget.flag,
-                              images: images,
-                              selectedImageList: uploadedImages,
-                              updateImages: updateImages,
-                              updateImagesFromCustomCamera:
-                                  updateImagesFromCustomCamera,
-                              videoFilePath: videoFilePath,
-                              videoFileThumbnailPath: videoFileThumbnailPath,
-                              selectedVideoImagePath: selectedVideoImagePath,
-                              updateImagesFromVideo: updateImagesFromVideo,
-                              selectedVideoPath: selectedVideoPath,
-                              getImageFromVideo: _getImageFromVideo,
-                              imageDesc1Controller:
-                                  galleryProvider!.imageDesc1Controller,
-                              provider: _itemEntryProvider,
-                              galleryProvider: provider,
-                              onReorder: onReorder,
-                              cameraImagePath: cameraImagePath,
-                              galleryImagePath: galleryImageAsset,
-                            );
-                          }),
-                          Consumer<ItemEntryProvider>(builder:
-                              (BuildContext context, ItemEntryProvider provider,
-                                  Widget? child) {
-                            if (provider.item != null &&
-                                provider.item!.id != null) {
-                              if (bindDataFirstTime) {
-                                userInputListingTitle.text =
-                                    provider.item!.title!;
-                                userInputBrand.text = provider.item!.brand!;
-                                userInputHighLightInformation.text =
-                                    provider.item!.highlightInformation!;
-                                userInputDescription.text =
-                                    provider.item!.description!;
-                                userInputDealOptionText.text =
-                                    provider.item!.dealOptionRemark!;
-
-                                if (valueHolder!.isSubLocation == PsConst.ONE) {
-                                  userInputLattitude.text =
-                                      provider.item!.itemLocationTownship!.lat!;
-                                  userInputLongitude.text =
-                                      provider.item!.itemLocationTownship!.lng!;
-                                  provider.itemLocationTownshipId =
-                                      provider.item!.itemLocationTownship!.id;
-                                  locationTownshipController.text = provider
-                                      .item!
-                                      .itemLocationTownship!
-                                      .townshipName!;
-                                } else {
-                                  userInputLattitude.text = provider.item!.lat!;
-                                  userInputLongitude.text = provider.item!.lng!;
-                                }
-                                provider.itemLocationId =
-                                    provider.item!.itemLocation!.id;
-                                locationController.text =
-                                    provider.item!.itemLocation!.name!;
-                                userInputAddress.text = provider.item!.address!;
-                                print(userInputAddress.text);
-                                userInputPrice.text = provider.item!.price!;
-                                userInputDiscount.text =
-                                    provider.item!.discountRate!;
-                                categoryController.text =
-                                    provider.item!.category!.catName!;
-                                subCategoryController.text =
-                                    provider.item!.subCategory!.name!;
-                                typeController.text =
-                                    provider.item!.itemType!.name!;
-                                itemConditionController.text =
-                                    provider.item!.conditionOfItem!.name!;
-                                priceTypeController.text =
-                                    provider.item!.itemPriceType!.name!;
-                                priceController.text = provider
-                                    .item!.itemCurrency!.currencySymbol!;
-                                dealOptionController.text =
-                                    provider.item!.dealOption!.name!;
-                                provider.categoryId =
-                                    provider.item!.category!.catId;
-                                provider.subCategoryId =
-                                    provider.item!.subCategory!.id;
-                                provider.itemTypeId =
-                                    provider.item!.itemType!.id;
-                                provider.itemConditionId =
-                                    provider.item!.conditionOfItem!.id;
-                                provider.itemCurrencyId =
-                                    provider.item!.itemCurrency!.id;
-                                provider.itemDealOptionId =
-                                    provider.item!.dealOption!.id;
-                                provider.itemPriceTypeId =
-                                    provider.item!.itemPriceType!.id;
-                                selectedVideoImagePath =
-                                    provider.item!.videoThumbnail!.imgPath;
-                                selectedVideoPath =
-                                    provider.item!.video!.imgPath;
-                                bindDataFirstTime = false;
-
-                                if (provider.item!.businessMode == '1') {
-                                  Utils.psPrint('Check On is shop');
-                                  provider.isCheckBoxSelect = true;
-                                  _BusinessModeCheckbox();
-                                } else {
-                                  provider.isCheckBoxSelect = false;
-                                  Utils.psPrint('Check Off is shop');
-                                  //  updateCheckBox(context, provider);
-                                  _BusinessModeCheckbox();
-                                }
+            // if (widget.flag == PsConst.EDIT_ITEM ||
+            //     (valueHolder!.isPaidApp != PsConst.ONE ||
+            //         (provider.user.data != null &&
+            //             int.parse(provider.user.data!.remainingPost!) > 0)))
+            return SingleChildScrollView(
+              child: AnimatedBuilder(
+                  animation: widget.animationController!,
+                  child: Container(
+                    color: PsColors.baseColor,
+                    padding:
+                        const EdgeInsets.only(left: 10.0, right: 10, top: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Consumer<GalleryProvider>(builder:
+                            (BuildContext context, GalleryProvider provider,
+                                Widget? child) {
+                          if (bindImageFirstTime &&
+                              provider.galleryList.data!.isNotEmpty) {
+                            for (int i = 0;
+                                i < widget.maxImageCount &&
+                                    i < provider.galleryList.data!.length;
+                                i++) {
+                              if (provider.galleryList.data![i].imgId != null) {
+                                uploadedImages[i] =
+                                    provider.galleryList.data![i];
                               }
                             }
-                            return AllControllerTextWidget(
-                              userInputListingTitle: userInputListingTitle,
-                              categoryController: categoryController,
-                              subCategoryController: subCategoryController,
-                              typeController: typeController,
-                              itemConditionController: itemConditionController,
-                              userInputBrand: userInputBrand,
-                              priceTypeController: priceTypeController,
-                              priceController: priceController,
-                              userInputHighLightInformation:
-                                  userInputHighLightInformation,
-                              userInputDescription: userInputDescription,
-                              dealOptionController: dealOptionController,
-                              userInputDealOptionText: userInputDealOptionText,
-                              locationController: locationController,
-                              locationTownshipController:
-                                  locationTownshipController,
-                              userInputLattitude: userInputLattitude,
-                              userInputLongitude: userInputLongitude,
-                              userInputAddress: userInputAddress,
-                              userInputPrice: userInputPrice,
-                              userInputDiscount: userInputDiscount,
-                              mapController: mapController,
-                              zoom: zoom,
-                              flag: widget.flag,
-                              item: widget.item,
-                              provider: provider,
-                              galleryProvider: galleryProvider,
-                              userProvider: userProvider,
-                              latlng: latlng,
-                              uploadImage: (String itemId) {
-                                //  if (isImageSelected.contains(true) || isSelectedVideoImagePath)
-                                uploadImage(itemId);
-                              },
-                              isImageSelected: isImageSelected,
-                              isSelectedVideoImagePath:
-                                  isSelectedVideoImagePath,
-                              updateMapController: updateMapController,
-                              googleMapController: googleMapController,
-                            );
-                          })
-                        ],
-                      ),
+                            bindImageFirstTime = false;
+                          }
+
+                          //  if (Utils.showUI(valueHolder!.image))
+                          return ImageUploadHorizontalList(
+                            flag: widget.flag,
+                            images: images,
+                            selectedImageList: uploadedImages,
+                            updateImages: updateImages,
+                            updateImagesFromCustomCamera:
+                                updateImagesFromCustomCamera,
+                            videoFilePath: videoFilePath,
+                            videoFileThumbnailPath: videoFileThumbnailPath,
+                            selectedVideoImagePath: selectedVideoImagePath,
+                            updateImagesFromVideo: updateImagesFromVideo,
+                            selectedVideoPath: selectedVideoPath,
+                            getImageFromVideo: _getImageFromVideo,
+                            imageDesc1Controller:
+                                galleryProvider!.imageDesc1Controller,
+                            provider: _itemEntryProvider,
+                            galleryProvider: provider,
+                            onReorder: onReorder,
+                            cameraImagePath: cameraImagePath,
+                            galleryImagePath: galleryImageAsset,
+                          );
+                        }),
+                        Consumer<ItemEntryProvider>(builder:
+                            (BuildContext context, ItemEntryProvider provider,
+                                Widget? child) {
+                          if (provider.item != null &&
+                              provider.item!.id != null) {
+                            if (bindDataFirstTime) {
+                              userInputListingTitle.text =
+                                  provider.item!.title!;
+                              userInputBrand.text = provider.item!.brand!;
+                              userInputHighLightInformation.text =
+                                  provider.item!.highlightInformation!;
+                              userInputDescription.text =
+                                  provider.item!.description!;
+                              userInputDealOptionText.text =
+                                  provider.item!.dealOptionRemark!;
+
+                              if (valueHolder!.isSubLocation == PsConst.ONE) {
+                                userInputLattitude.text =
+                                    provider.item!.itemLocationTownship!.lat!;
+                                userInputLongitude.text =
+                                    provider.item!.itemLocationTownship!.lng!;
+                                provider.itemLocationTownshipId =
+                                    provider.item!.itemLocationTownship!.id;
+                                locationTownshipController.text = provider
+                                    .item!.itemLocationTownship!.townshipName!;
+                              } else {
+                                userInputLattitude.text = provider.item!.lat!;
+                                userInputLongitude.text = provider.item!.lng!;
+                              }
+                              provider.itemLocationId =
+                                  provider.item!.itemLocation!.id;
+                              locationController.text =
+                                  provider.item!.itemLocation!.name!;
+                              userInputAddress.text = provider.item!.address!;
+                              print(userInputAddress.text);
+                              userInputPrice.text = provider.item!.price!;
+                              userInputDiscount.text =
+                                  provider.item!.discountRate!;
+                              categoryController.text =
+                                  provider.item!.category!.catName!;
+                              subCategoryController.text =
+                                  provider.item!.subCategory!.name!;
+                              typeController.text =
+                                  provider.item!.itemType!.name!;
+                              itemConditionController.text =
+                                  provider.item!.conditionOfItem!.name!;
+                              priceTypeController.text =
+                                  provider.item!.itemPriceType!.name!;
+                              priceController.text =
+                                  provider.item!.itemCurrency!.currencySymbol!;
+                              dealOptionController.text =
+                                  provider.item!.dealOption!.name!;
+                              provider.categoryId =
+                                  provider.item!.category!.catId;
+                              provider.subCategoryId =
+                                  provider.item!.subCategory!.id;
+                              provider.itemTypeId = provider.item!.itemType!.id;
+                              provider.itemConditionId =
+                                  provider.item!.conditionOfItem!.id;
+                              provider.itemCurrencyId =
+                                  provider.item!.itemCurrency!.id;
+                              provider.itemDealOptionId =
+                                  provider.item!.dealOption!.id;
+                              provider.itemPriceTypeId =
+                                  provider.item!.itemPriceType!.id;
+                              selectedVideoImagePath =
+                                  provider.item!.videoThumbnail!.imgPath;
+                              selectedVideoPath = provider.item!.video!.imgPath;
+                              bindDataFirstTime = false;
+
+                              if (provider.item!.businessMode == '1') {
+                                Utils.psPrint('Check On is shop');
+                                provider.isCheckBoxSelect = true;
+                                _BusinessModeCheckbox();
+                              } else {
+                                provider.isCheckBoxSelect = false;
+                                Utils.psPrint('Check Off is shop');
+                                //  updateCheckBox(context, provider);
+                                _BusinessModeCheckbox();
+                              }
+                            }
+                          }
+                          return AllControllerTextWidget(
+                            userInputListingTitle: userInputListingTitle,
+                            categoryController: categoryController,
+                            subCategoryController: subCategoryController,
+                            typeController: typeController,
+                            itemConditionController: itemConditionController,
+                            userInputBrand: userInputBrand,
+                            priceTypeController: priceTypeController,
+                            priceController: priceController,
+                            userInputHighLightInformation:
+                                userInputHighLightInformation,
+                            userInputDescription: userInputDescription,
+                            dealOptionController: dealOptionController,
+                            userInputDealOptionText: userInputDealOptionText,
+                            locationController: locationController,
+                            locationTownshipController:
+                                locationTownshipController,
+                            userInputLattitude: userInputLattitude,
+                            userInputLongitude: userInputLongitude,
+                            userInputAddress: userInputAddress,
+                            userInputPrice: userInputPrice,
+                            userInputDiscount: userInputDiscount,
+                            mapController: mapController,
+                            zoom: zoom,
+                            flag: widget.flag,
+                            item: widget.item,
+                            provider: provider,
+                            galleryProvider: galleryProvider,
+                            userProvider: userProvider,
+                            latlng: latlng,
+                            uploadImage: (String itemId) {
+                              //  if (isImageSelected.contains(true) || isSelectedVideoImagePath)
+                              uploadImage(itemId);
+                            },
+                            isImageSelected: isImageSelected,
+                            isSelectedVideoImagePath: isSelectedVideoImagePath,
+                            updateMapController: updateMapController,
+                            googleMapController: googleMapController,
+                          );
+                        })
+                      ],
                     ),
-                    builder: (BuildContext context, Widget? child) {
-                      return child!;
-                    }),
-              );
-            else
-              return InAppPurchaseBuyPackageDialog(
-                onInAppPurchaseTap: () async {
-                  // InAppPurchase View
-                  final dynamic returnData = await Navigator.pushNamed(
-                      context, RoutePaths.buyPackage,
-                      arguments: <String, dynamic>{
-                        'android': valueHolder?.packageAndroidKeyList,
-                        'ios': valueHolder?.packageIOSKeyList
-                      });
+                  ),
+                  builder: (BuildContext context, Widget? child) {
+                    return child!;
+                  }),
+            );
+            // else
+            // return Container();
+            // InAppPurchaseBuyPackageDialog(
+            //   onInAppPurchaseTap: () async {
+            //     // InAppPurchase View
+            //     final dynamic returnData = await Navigator.pushNamed(
+            //         context, RoutePaths.buyPackage,
+            //         arguments: <String, dynamic>{
+            //           'android': valueHolder?.packageAndroidKeyList,
+            //           'ios': valueHolder?.packageIOSKeyList
+            //         });
 
-                  if (returnData != null) {
-                    setState(() {
-                      userProvider!.user.data!.remainingPost = returnData;
-                    });
-                  } else {
-                    provider.getUser(valueHolder!.loginUserId);
-                  }
-                },
-              );
+            //     if (returnData != null) {
+            //       setState(() {
+            //         userProvider!.user.data!.remainingPost = returnData;
+            //       });
+            //     } else {
+            //       provider.getUser(valueHolder!.loginUserId);
+            //     }
+            //   },
+            // );
           },
         ),
       ),
@@ -975,28 +971,29 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
                         onPressed: () {},
                       );
                     });
+              } else if (widget.subCategoryController!.text == '') {
+                showDialog<dynamic>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return WarningDialog(
+                        message: Utils.getString(
+                            context, 'item_entry_need_subcategory'),
+                        onPressed: () {},
+                      );
+                    });
               }
-              // else if (widget.subCategoryController!.text == '') {
+              // else if (widget.typeController!.text == '') {
               //   showDialog<dynamic>(
               //       context: context,
               //       builder: (BuildContext context) {
               //         return WarningDialog(
-              //           message: Utils.getString(
-              //               context, 'item_entry_need_subcategory'),
+              //           message:
+              //               Utils.getString(context, 'item_entry_need_type'),
               //           onPressed: () {},
               //         );
               //       });
               // }
-              //  else if (widget.typeController!.text == '') {
-              //   showDialog<dynamic>(
-              //       context: context,
-              //       builder: (BuildContext context) {
-              //         return WarningDialog(
-              //           message: Utils.getString(context, 'item_entry_need_type'),
-              //           onPressed: () {},
-              //         );
-              //       });
-              // } else if (widget.itemConditionController!.text == '') {
+              // else if (widget.itemConditionController!.text == '') {
               //   showDialog<dynamic>(
               //       context: context,
               //       builder: (BuildContext context) {
@@ -1006,7 +1003,7 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
               //           onPressed: () {},
               //         );
               //       });
-              //}
+              // }
               else if ( //Utils.showUI(valueHolder!.itemCurrencyId) &&
                   widget.priceController!.text == '') {
                 showDialog<dynamic>(
@@ -1094,177 +1091,196 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
                       );
                     });
               } else {
-                if (widget.flag == PsConst.ADD_NEW_ITEM) {
-                  // if (valueHolder!.isPaidApp != PsConst.ONE ||
-                  //               int.parse(widget.userProvider!.user.data!.remainingPost!) > 0) {
-                  if (!PsProgressDialog.isShowing()) {
-                    await PsProgressDialog.showDialog(context,
-                        message: Utils.getString(
-                            context, 'progressloading_item_uploading'));
-                  }
-                  //add new
-                  final ItemEntryParameterHolder itemEntryParameterHolder =
-                      ItemEntryParameterHolder(
-                    catId: widget.provider!.categoryId,
-                    subCatId: widget.provider!.subCategoryId,
-                    itemTypeId: widget.provider!.itemTypeId,
-                    conditionOfItemId: widget.provider!.itemConditionId,
-                    itemPriceTypeId: widget.provider!.itemPriceTypeId,
-                    itemCurrencyId: widget.provider!.itemCurrencyId,
-                    price: widget.userInputPrice!.text,
-                    discountRate: widget.userInputDiscount!.text,
-                    dealOptionId: widget.provider!.itemDealOptionId,
-                    itemLocationId: widget.provider!.itemLocationId,
-                    itemLocationTownshipId:
-                        widget.provider!.itemLocationTownshipId,
-                    businessMode: widget.provider!.checkOrNotShop,
-                    isSoldOut: '', //must be ''
-                    title: widget.userInputListingTitle!.text,
-                    brand: widget.userInputBrand!.text,
-                    highlightInfomation:
-                        widget.userInputHighLightInformation!.text,
-                    description: widget.userInputDescription!.text,
-                    dealOptionRemark: widget.userInputDealOptionText!.text,
-                    latitude: widget.userInputLattitude!.text,
-                    longitude: widget.userInputLongitude!.text,
-                    address: widget.userInputAddress!.text,
-                    id: widget.provider!.itemId, //must be '' <<< ID
-                    addedUserId: widget.provider!.psValueHolder!.loginUserId,
-                  );
+                // if (widget.flag == PsConst.ADD_NEW_ITEM) {
+                //   // if (valueHolder!.isPaidApp != PsConst.ONE ||
+                //   //               int.parse(widget.userProvider!.user.data!.remainingPost!) > 0) {
+                //   // if (!PsProgressDialog.isShowing()) {
+                //   //   await PsProgressDialog.showDialog(context,
+                //   //       message: Utils.getString(
+                //   //           context, 'progressloading_item_uploading'));
+                //   // }
+                //   //add new
+                //   final ItemEntryParameterHolder itemEntryParameterHolder =
+                //       ItemEntryParameterHolder(
+                //     catId: widget.provider!.categoryId,
+                //     subCatId: widget.provider!.subCategoryId,
+                //     itemTypeId: widget.provider!.itemTypeId,
+                //     conditionOfItemId: widget.provider!.itemConditionId,
+                //     itemPriceTypeId: widget.provider!.itemPriceTypeId,
+                //     itemCurrencyId: widget.provider!.itemCurrencyId,
+                //     price: widget.userInputPrice!.text,
+                //     discountRate: widget.userInputDiscount!.text,
+                //     dealOptionId: widget.provider!.itemDealOptionId,
+                //     itemLocationId: widget.provider!.itemLocationId,
+                //     itemLocationTownshipId:
+                //         widget.provider!.itemLocationTownshipId,
+                //     businessMode: widget.provider!.checkOrNotShop,
+                //     isSoldOut: '', //must be ''
+                //     title: widget.userInputListingTitle!.text,
+                //     brand: widget.userInputBrand!.text,
+                //     highlightInfomation:
+                //         widget.userInputHighLightInformation!.text,
+                //     description: widget.userInputDescription!.text,
+                //     dealOptionRemark: widget.userInputDealOptionText!.text,
+                //     latitude: widget.userInputLattitude!.text,
+                //     longitude: widget.userInputLongitude!.text,
+                //     address: widget.userInputAddress!.text,
+                //     id: widget.provider!.itemId, //must be '' <<< ID
+                //     addedUserId: widget.provider!.psValueHolder!.loginUserId,
+                //   );
 
-                  final PsResource<Product> itemData = await widget.provider!
-                      .postItemEntry(itemEntryParameterHolder.toMap(),
-                          widget.provider!.psValueHolder!.loginUserId!);
-                  PsProgressDialog.dismissDialog();
+                //   final PsResource<Product> itemData = await widget.provider!
+                //       .postItemEntry(itemEntryParameterHolder.toMap(),
+                //           widget.provider!.psValueHolder!.loginUserId!);
+                //   print(widget.provider!.psValueHolder!.loginUserId);
+                //   print(widget.provider!.categoryId);
+                //   print(widget.provider!.subCategoryId!);
+                //   print(widget.provider!.itemTypeId!);
+                //   print(widget.provider!.itemConditionId!);
+                //   print(widget.provider!.itemPriceTypeId!);
+                //   print(widget.provider!.itemCurrencyId!);
+                //   print(
+                //     widget.userInputPrice!.text,
+                //   );
+                //   print(widget.provider!.subCategoryId!);
+                //   print(widget.provider!.subCategoryId!);
 
-                  if (itemData.status == PsStatus.SUCCESS) {
-                    widget.provider!.itemId = itemData.data!.id;
-                    if (itemData.data != null) {
-                      if (widget.isImageSelected.contains(true)) {
-                        widget.uploadImage!(itemData.data!.id);
+                //   PsProgressDialog.dismissDialog();
 
-                        // if (widget.isSelectedFirstImagePath ||
-                        //     widget.isSelectedSecondImagePath ||
-                        //     widget.isSelectedThirdImagePath ||
-                        //     widget.isSelectedFouthImagePath ||
-                        //     widget.isSelectedFifthImagePath ||
-                        //     widget.isSelectedVideoImagePath ) {
-                        //   widget.uploadImage(itemData.data!.id);
-                        // }
-                      }
+                //   if (itemData.status == PsStatus.SUCCESS) {
+                //     widget.provider!.itemId = itemData.data!.id;
+                //     if (itemData.data != null) {
+                //       if (widget.isImageSelected.contains(true)) {
+                //         widget.uploadImage!(itemData.data!.id);
+
+                //         // if (widget.isSelectedFirstImagePath ||
+                //         //     widget.isSelectedSecondImagePath ||
+                //         //     widget.isSelectedThirdImagePath ||
+                //         //     widget.isSelectedFouthImagePath ||
+                //         //     widget.isSelectedFifthImagePath ||
+                //         //     widget.isSelectedVideoImagePath ) {
+                //         //   widget.uploadImage(itemData.data!.id);
+                //         // }
+                //       }
+                //     }
+                //   } else {
+                //     print(
+                //         "adsmdaodaasdasdadadsadsads${widget.provider!.psValueHolder!.loginUserId}");
+
+                //     showDialog<dynamic>(
+                //         context: context,
+                //         builder: (BuildContext context) {
+                //           return ErrorDialog(
+                //             message: itemData.message,
+                //           );
+                //         });
+                //   }
+                //   // } else {
+                //   //   showDialog<dynamic>(context: context, builder: (BuildContext context) {
+                //   //       return InAppPurchaseBuyPackageDialog(
+                //   //     onInAppPurchaseTap: () async {
+                //   //       // InAppPurchase View
+                //   //       final dynamic returnData = await Navigator.pushNamed(
+                //   //           context, RoutePaths.buyPackage,
+                //   //           arguments: <String, dynamic>{
+                //   //             'userId': widget.userProvider!.user.data!.userId,
+                //   //           });
+
+                //   //       if (returnData != null) {
+                //   //         setState(() {
+                //   //           widget.userProvider!.user.data!.remainingPost = returnData;
+                //   //         });
+                //   //         // if (!PsProgressDialog.isShowing()) {
+                //   //         // await PsProgressDialog.showDialog(context,
+                //   //         // message: Utils.getString(
+                //   //         //     context, 'login__loading'));
+                //   //         //  }
+                //   //         // await widget.userProvider!
+                //   //         //     .getUser(valueHolder!.loginUserId);
+                //   //         // PsProgressDialog.dismissDialog();
+                //   //       }
+                //   //     },
+                //   //   );
+                //   //   });
+
+                //   // }
+                // } else {
+                // edit item
+                // if (!PsProgressDialog.isShowing()) {
+                //   await PsProgressDialog.showDialog(context,
+                //       message: Utils.getString(
+                //           context, 'progressloading_item_uploading'));
+                // }
+                final ItemEntryParameterHolder itemEntryParameterHolder =
+                    ItemEntryParameterHolder(
+                  catId: widget.provider!.categoryId,
+                  subCatId: widget.provider!.subCategoryId,
+                  itemTypeId: widget.provider!.itemTypeId,
+                  conditionOfItemId: widget.provider!.itemConditionId,
+                  itemPriceTypeId: widget.provider!.itemPriceTypeId,
+                  itemCurrencyId: widget.provider!.itemCurrencyId,
+                  price: widget.userInputPrice!.text,
+                  discountRate: widget.userInputDiscount!.text,
+                  dealOptionId: widget.provider!.itemDealOptionId,
+                  itemLocationId: widget.provider!.itemLocationId,
+                  itemLocationTownshipId:
+                      widget.provider!.itemLocationTownshipId,
+                  businessMode: widget.provider!.checkOrNotShop,
+                  isSoldOut: widget.item!.isSoldOut,
+                  title: widget.userInputListingTitle!.text,
+                  brand: widget.userInputBrand!.text,
+                  highlightInfomation:
+                      widget.userInputHighLightInformation!.text,
+                  description: widget.userInputDescription!.text,
+                  dealOptionRemark: widget.userInputDealOptionText!.text,
+                  latitude: widget.userInputLattitude!.text,
+                  longitude: widget.userInputLongitude!.text,
+                  address: widget.userInputAddress!.text,
+                  id: widget.item!.id,
+                  addedUserId: widget.provider!.psValueHolder!.loginUserId,
+                );
+
+                final PsResource<Product> itemData = await widget.provider!
+                    .postItemEntry(itemEntryParameterHolder.toMap(),
+                        widget.provider!.psValueHolder!.loginUserId!);
+                PsProgressDialog.dismissDialog();
+
+                if (itemData.status == PsStatus.SUCCESS) {
+                  if (itemData.data != null) {
+                    Fluttertoast.showToast(
+                        msg: 'Item Uploaded',
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.blueGrey,
+                        textColor: Colors.white);
+
+                    if (widget.isImageSelected.contains(true) ||
+                        widget.isSelectedVideoImagePath!) {
+                      widget.uploadImage!(itemData.data!.id);
+
+                      // if (widget.isSelectedFirstImagePath ||
+                      //     widget.isSelectedSecondImagePath ||
+                      //     widget.isSelectedThirdImagePath ||
+                      //     widget.isSelectedFouthImagePath ||
+                      //     widget.isSelectedFifthImagePath ||
+                      //     widget.isSelectedVideoImagePath) {
+                      //   widget.uploadImage(itemData.data!.id);
+
                     }
-                  } else {
-                    showDialog<dynamic>(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return ErrorDialog(
-                            message: itemData.message,
-                          );
-                        });
                   }
-                  // } else {
-                  //   showDialog<dynamic>(context: context, builder: (BuildContext context) {
-                  //       return InAppPurchaseBuyPackageDialog(
-                  //     onInAppPurchaseTap: () async {
-                  //       // InAppPurchase View
-                  //       final dynamic returnData = await Navigator.pushNamed(
-                  //           context, RoutePaths.buyPackage,
-                  //           arguments: <String, dynamic>{
-                  //             'userId': widget.userProvider!.user.data!.userId,
-                  //           });
-
-                  //       if (returnData != null) {
-                  //         setState(() {
-                  //           widget.userProvider!.user.data!.remainingPost = returnData;
-                  //         });
-                  //         // if (!PsProgressDialog.isShowing()) {
-                  //         // await PsProgressDialog.showDialog(context,
-                  //         // message: Utils.getString(
-                  //         //     context, 'login__loading'));
-                  //         //  }
-                  //         // await widget.userProvider!
-                  //         //     .getUser(valueHolder!.loginUserId);
-                  //         // PsProgressDialog.dismissDialog();
-                  //       }
-                  //     },
-                  //   );
-                  //   });
-
-                  // }
+                  // Navigator.pushNamed(
+                  //   context,
+                  //   RoutePaths.home,
+                  // );
                 } else {
-                  // edit item
-                  if (!PsProgressDialog.isShowing()) {
-                    await PsProgressDialog.showDialog(context,
-                        message: Utils.getString(
-                            context, 'progressloading_item_uploading'));
-                  }
-                  final ItemEntryParameterHolder itemEntryParameterHolder =
-                      ItemEntryParameterHolder(
-                    catId: widget.provider!.categoryId,
-                    subCatId: widget.provider!.subCategoryId,
-                    itemTypeId: widget.provider!.itemTypeId,
-                    conditionOfItemId: widget.provider!.itemConditionId,
-                    itemPriceTypeId: widget.provider!.itemPriceTypeId,
-                    itemCurrencyId: widget.provider!.itemCurrencyId,
-                    price: widget.userInputPrice!.text,
-                    discountRate: widget.userInputDiscount!.text,
-                    dealOptionId: widget.provider!.itemDealOptionId,
-                    itemLocationId: widget.provider!.itemLocationId,
-                    itemLocationTownshipId:
-                        widget.provider!.itemLocationTownshipId,
-                    businessMode: widget.provider!.checkOrNotShop,
-                    isSoldOut: widget.item!.isSoldOut,
-                    title: widget.userInputListingTitle!.text,
-                    brand: widget.userInputBrand!.text,
-                    highlightInfomation:
-                        widget.userInputHighLightInformation!.text,
-                    description: widget.userInputDescription!.text,
-                    dealOptionRemark: widget.userInputDealOptionText!.text,
-                    latitude: widget.userInputLattitude!.text,
-                    longitude: widget.userInputLongitude!.text,
-                    address: widget.userInputAddress!.text,
-                    id: widget.item!.id,
-                    addedUserId: widget.provider!.psValueHolder!.loginUserId,
-                  );
-
-                  final PsResource<Product> itemData = await widget.provider!
-                      .postItemEntry(itemEntryParameterHolder.toMap(),
-                          widget.provider!.psValueHolder!.loginUserId!);
-                  PsProgressDialog.dismissDialog();
-
-                  if (itemData.status == PsStatus.SUCCESS) {
-                    if (itemData.data != null) {
-                      Fluttertoast.showToast(
-                          msg: 'Item Uploaded',
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIosWeb: 1,
-                          backgroundColor: Colors.blueGrey,
-                          textColor: Colors.white);
-
-                      if (widget.isImageSelected.contains(true) ||
-                          widget.isSelectedVideoImagePath!) {
-                        widget.uploadImage!(itemData.data!.id);
-
-                        // if (widget.isSelectedFirstImagePath ||
-                        //     widget.isSelectedSecondImagePath ||
-                        //     widget.isSelectedThirdImagePath ||
-                        //     widget.isSelectedFouthImagePath ||
-                        //     widget.isSelectedFifthImagePath ||
-                        //     widget.isSelectedVideoImagePath) {
-                        //   widget.uploadImage(itemData.data!.id);
-
-                      }
-                    }
-                  } else {
-                    showDialog<dynamic>(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return ErrorDialog(
-                            message: itemData.message,
-                          );
-                        });
-                  }
+                  showDialog<dynamic>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ErrorDialog(
+                          message: itemData.message,
+                        );
+                      });
                 }
               }
             }));
@@ -2011,7 +2027,7 @@ class ImageUploadHorizontalListState extends State<ImageUploadHorizontalList> {
   late ItemEntryProvider provider;
   late PsValueHolder psValueHolder;
   Future<void> loadPickMultiImage(int index) async {
-      final ImagePicker _picker = ImagePicker();
+    final ImagePicker _picker = ImagePicker();
     List<XFile> resultList = <XFile>[];
 
     try {
@@ -2159,7 +2175,7 @@ class ImageUploadHorizontalListState extends State<ImageUploadHorizontalList> {
           //     source: ImageSource.gallery,
           //   );
 
-           try {
+          try {
             videoFilePath = (await FilePicker.platform.pickFiles(
               type: FileType.video,
               allowMultiple: true,
@@ -2171,28 +2187,29 @@ class ImageUploadHorizontalListState extends State<ImageUploadHorizontalList> {
             print(ex);
           }
 
-            if (videoFilePath != null) {
-              final File pickedVideo = File(videoFilePath![0].path!);
-              final VideoPlayerController videoPlayer =
-                  VideoPlayerController.file(pickedVideo);
-              await videoPlayer.initialize();
+          if (videoFilePath != null) {
+            final File pickedVideo = File(videoFilePath![0].path!);
+            final VideoPlayerController videoPlayer =
+                VideoPlayerController.file(pickedVideo);
+            await videoPlayer.initialize();
 
-               final int maximumSecond = int.parse(psValueHolder.videoDuration ?? '60000');
-              final int videoDuration = videoPlayer.value.duration.inMilliseconds;
+            final int maximumSecond =
+                int.parse(psValueHolder.videoDuration ?? '60000');
+            final int videoDuration = videoPlayer.value.duration.inMilliseconds;
 
-              if (videoDuration < maximumSecond) {
-                await widget.getImageFromVideo!(pickedVideo.path);
-                widget.updateImagesFromVideo!(pickedVideo.path, -2);
-              } else {
-                showDialog<dynamic>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return ErrorDialog(
-                          message: Utils.getString(
-                              context, 'error_dialog__select_video'));
-                    });
-              }
+            if (videoDuration < maximumSecond) {
+              await widget.getImageFromVideo!(pickedVideo.path);
+              widget.updateImagesFromVideo!(pickedVideo.path, -2);
+            } else {
+              showDialog<dynamic>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(
+                        message: Utils.getString(
+                            context, 'error_dialog__select_video'));
+                  });
             }
+          }
           // } catch (e) {
           //   showDialog<dynamic>(
           //       context: context,

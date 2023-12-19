@@ -202,23 +202,23 @@ class _MapFilterViewState extends State<MapFilterView>
                                   'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                             ),
                             CircleLayer(circles: circleMarkers),
-                            MarkerLayer(markers: <Marker>[
-                              Marker(
-                                width: 80.0,
-                                height: 80.0,
-                                point: latlng!,
-                                child:  Container(
-                                  child: IconButton(
-                                    icon: Icon(
-                                      Icons.location_on,
-                                      color: PsColors.iconColor,
-                                    ),
-                                    iconSize: 45,
-                                    onPressed: () {},
+                          MarkerLayer(markers: <Marker>[
+                            Marker(
+                              width: 80.0,
+                              height: 80.0,
+                              point: latlng!,
+                              child:  Container(
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.location_on,
+                                    color: PsColors.iconColor,
                                   ),
+                                  iconSize: 45,
+                                  onPressed: () {},
                                 ),
-                              )
-                            ])
+                              ),
+                            )
+                          ])
                           ],
                   // layers: <LayerOptions>[
                   //   TileLayerOptions(

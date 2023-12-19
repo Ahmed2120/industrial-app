@@ -393,10 +393,13 @@ class _ImageAndTextWidget extends StatelessWidget {
                               ? Utils.getString(context, 'default__user_name')
                               : chatHistory.buyer?.userName ?? '',
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                              color: PsColors.textColor2,
-                              fontWeight: FontWeight
-                                  .bold), //?.copyWith(color: Colors.grey),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(
+                                  color: PsColors.textColor2,
+                                  fontWeight: FontWeight
+                                      .bold), //?.copyWith(color: Colors.grey),
                         ),
                         if (chatHistory.buyer?.isVerifyBlueMark == PsConst.ONE)
                           Container(

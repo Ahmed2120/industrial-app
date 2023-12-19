@@ -136,7 +136,7 @@ class _SmoothStarRatingState extends State<SmoothStarRating> {
                   });
                 },
                 child: GestureDetector(
-                  onTapDown: ( detail) {
+                  onTapDown: (TapDownDetails detail) {
                     isWidgetTapped = true;
 
                     final RenderBox box =
@@ -195,7 +195,7 @@ class _SmoothStarRatingState extends State<SmoothStarRating> {
                 ),
               )
             : GestureDetector(
-                onTapDown: ( detail) {
+                onTapDown: (TapDownDetails detail) {
                   final RenderBox box = context.findRenderObject() as RenderBox;
                   final Offset _pos = box.globalToLocal(detail.globalPosition);
                   final double i = (_pos.dx - widget.spacing) / widget.size;

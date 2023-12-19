@@ -125,9 +125,9 @@ class ProductRepository extends PsRepository {
           print('***<< Data Updated >>*** ' + paramKey);
           if (status != null && status != PsStatus.NOACTION) {
             print(status);
-           if (resultList != null && productListStream != null) {
-            productListStream.sink.add(resultList);
-              }
+            if (resultList != null && productListStream != null) {
+              productListStream.sink.add(resultList);
+            }
           } else {
             print('No Action');
           }
@@ -570,7 +570,7 @@ class ProductRepository extends PsRepository {
 
   Future<dynamic> getAllItemListFromFollower(
       StreamController<PsResource<List<Product>>>? itemListFromFollowersStream,
-       Map<dynamic, dynamic> jsonMap,
+      Map<dynamic, dynamic> jsonMap,
       bool isConnectedToInternet,
       String? loginUserId,
       int limit,
@@ -590,7 +590,7 @@ class ProductRepository extends PsRepository {
     // Server Call
     if (isConnectedToInternet) {
       final PsResource<List<Product>> _resource = await _psApiService
-          .getAllItemListFromFollower(jsonMap,loginUserId, limit, offset);
+          .getAllItemListFromFollower(jsonMap, loginUserId, limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
         // Create Map List
@@ -643,7 +643,7 @@ class ProductRepository extends PsRepository {
 
   Future<dynamic> getNextPageItemListFromFollower(
       StreamController<PsResource<List<Product>>>? itemListFromFollowersStream,
-        Map<dynamic, dynamic> jsonMap,
+      Map<dynamic, dynamic> jsonMap,
       bool isConnectedToInternet,
       String loginUserId,
       int limit,
@@ -660,7 +660,7 @@ class ProductRepository extends PsRepository {
 
     if (isConnectedToInternet) {
       final PsResource<List<Product>> _resource = await _psApiService
-          .getAllItemListFromFollower(jsonMap,loginUserId, limit, offset);
+          .getAllItemListFromFollower(jsonMap, loginUserId, limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
         // Create Map List
@@ -845,16 +845,19 @@ class ProductRepository extends PsRepository {
     }
   }
 
-  Future<PsResource<Product>> postItemEntry(Map<dynamic, dynamic> jsonMap, String loginUserId,
-      bool isConnectedToInternet, PsStatus status,
+  Future<PsResource<Product>> postItemEntry(Map<dynamic, dynamic> jsonMap,
+      String loginUserId, bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<Product> _resource =
         await _psApiService.postItemEntry(jsonMap, loginUserId);
 
     if (_resource.status == PsStatus.SUCCESS) {
+      print('aaaaaaaaaa');
       await insert(_resource.data);
       return _resource;
     } else {
+      print('bbbbbbbb');
+
       final Completer<PsResource<Product>> completer =
           Completer<PsResource<Product>>();
       completer.complete(_resource);

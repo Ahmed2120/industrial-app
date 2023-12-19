@@ -125,7 +125,9 @@ class _ProfilePageState extends State<ProfileView>
               lazy: false,
               create: (BuildContext context) {
                 paidAdItemProvider = PaidAdItemProvider(
-                    repo: paidAdItemRepository, psValueHolder: psValueHolder, limit: psValueHolder!.defaultLoadingLimit!);
+                    repo: paidAdItemRepository,
+                    psValueHolder: psValueHolder,
+                    limit: psValueHolder!.defaultLoadingLimit!);
                 if (paidAdItemProvider!.psValueHolder!.loginUserId == null ||
                     paidAdItemProvider!.psValueHolder!.loginUserId == '') {
                   paidAdItemProvider!.loadPaidAdItemList(widget.userId);
@@ -166,8 +168,11 @@ class _ProfilePageState extends State<ProfileView>
               lazy: false,
               create: (BuildContext context) {
                 productProvider = AddedItemProvider(
-                    repo: productRepository, psValueHolder: psValueHolder, limit: psValueHolder!.defaultLoadingLimit!);
-                productProvider!.addedUserParameterHolder.mile = psValueHolder!.mile;
+                    repo: productRepository,
+                    psValueHolder: psValueHolder,
+                    limit: psValueHolder!.defaultLoadingLimit!);
+                productProvider!.addedUserParameterHolder.mile =
+                    psValueHolder!.mile;
                 if (productProvider!.psValueHolder!.loginUserId == null ||
                     productProvider!.psValueHolder!.loginUserId == '') {
                   productProvider!.addedUserParameterHolder.addedUserId =
@@ -196,8 +201,11 @@ class _ProfilePageState extends State<ProfileView>
               lazy: false,
               create: (BuildContext context) {
                 pendingProductProvider = PendingProductProvider(
-                    repo: productRepository, psValueHolder: psValueHolder, limit: psValueHolder!.defaultLoadingLimit!);
-                pendingProductProvider!.addedUserParameterHolder.mile = psValueHolder!.mile;    
+                    repo: productRepository,
+                    psValueHolder: psValueHolder,
+                    limit: psValueHolder!.defaultLoadingLimit!);
+                pendingProductProvider!.addedUserParameterHolder.mile =
+                    psValueHolder!.mile;
                 if (pendingProductProvider!.psValueHolder!.loginUserId ==
                         null ||
                     pendingProductProvider!.psValueHolder!.loginUserId == '') {
@@ -221,8 +229,11 @@ class _ProfilePageState extends State<ProfileView>
               lazy: false,
               create: (BuildContext context) {
                 disabledProductProvider = DisabledProductProvider(
-                    repo: productRepository, psValueHolder: psValueHolder, limit: psValueHolder!.defaultLoadingLimit!);
-                disabledProductProvider!.addedUserParameterHolder.mile = psValueHolder!.mile;    
+                    repo: productRepository,
+                    psValueHolder: psValueHolder,
+                    limit: psValueHolder!.defaultLoadingLimit!);
+                disabledProductProvider!.addedUserParameterHolder.mile =
+                    psValueHolder!.mile;
                 if (disabledProductProvider!.psValueHolder!.loginUserId ==
                         null ||
                     disabledProductProvider!.psValueHolder!.loginUserId == '') {
@@ -245,22 +256,26 @@ class _ProfilePageState extends State<ProfileView>
 
                 return disabledProductProvider;
               }),
-              ChangeNotifierProvider<SoldOutProductProvider?>(
+          ChangeNotifierProvider<SoldOutProductProvider?>(
               lazy: false,
               create: (BuildContext context) {
                 soldOutProductProvider = SoldOutProductProvider(
-                    repo: soldOutItemRepository, psValueHolder: psValueHolder, limit: psValueHolder!.defaultLoadingLimit!); 
-                     if (productProvider!.psValueHolder!.loginUserId == null ||
+                    repo: soldOutItemRepository,
+                    psValueHolder: psValueHolder,
+                    limit: psValueHolder!.defaultLoadingLimit!);
+                if (productProvider!.psValueHolder!.loginUserId == null ||
                     soldOutProductProvider!.psValueHolder!.loginUserId == '') {
                   soldOutProductProvider!.addedUserParameterHolder.addedUserId =
                       widget.userId;
-                  soldOutProductProvider!.addedUserParameterHolder.isSoldOut = '1';
+                  soldOutProductProvider!.addedUserParameterHolder.isSoldOut =
+                      '1';
                   soldOutProductProvider!.loadSoldOutProductList(
                       widget.userId, productProvider!.addedUserParameterHolder);
                 } else {
                   soldOutProductProvider!.addedUserParameterHolder.addedUserId =
                       productProvider!.psValueHolder!.loginUserId;
-                  soldOutProductProvider!.addedUserParameterHolder.isSoldOut = '1';
+                  soldOutProductProvider!.addedUserParameterHolder.isSoldOut =
+                      '1';
                   soldOutProductProvider!.loadSoldOutProductList(
                       soldOutProductProvider!.psValueHolder!.loginUserId,
                       soldOutProductProvider!.addedUserParameterHolder);
@@ -271,8 +286,11 @@ class _ProfilePageState extends State<ProfileView>
               lazy: false,
               create: (BuildContext context) {
                 rejectedProductProvider = RejectedProductProvider(
-                    repo: productRepository, psValueHolder: psValueHolder, limit: psValueHolder!.defaultLoadingLimit!);
-                rejectedProductProvider!.addedUserParameterHolder.mile = psValueHolder!.mile;   
+                    repo: productRepository,
+                    psValueHolder: psValueHolder,
+                    limit: psValueHolder!.defaultLoadingLimit!);
+                rejectedProductProvider!.addedUserParameterHolder.mile =
+                    psValueHolder!.mile;
                 if (rejectedProductProvider!.psValueHolder!.loginUserId ==
                         null ||
                     rejectedProductProvider!.psValueHolder!.loginUserId == '') {
@@ -390,18 +408,18 @@ class _ProfilePageState extends State<ProfileView>
                     provider: provider,
                     galleryProvider: galleryProvider,
                     callLogoutCallBack: widget.callLogoutCallBack),*/
-                if (psValueHolder!.isPaidApp == PsConst.ONE)    
-                _BuyAdTransactionWidget(
-                  animationController: widget.animationController,
-                  animation: Tween<double>(begin: 0.0, end: 1.0).animate(
-                    CurvedAnimation(
-                      parent: widget.animationController,
-                      curve: const Interval((1 / 4) * 2, 1.0,
-                          curve: Curves.fastOutSlowIn),
+                if (psValueHolder!.isPaidApp == PsConst.ONE)
+                  _BuyAdTransactionWidget(
+                    animationController: widget.animationController,
+                    animation: Tween<double>(begin: 0.0, end: 1.0).animate(
+                      CurvedAnimation(
+                        parent: widget.animationController,
+                        curve: const Interval((1 / 4) * 2, 1.0,
+                            curve: Curves.fastOutSlowIn),
+                      ),
                     ),
+                    userId: widget.userId, //animationController,
                   ),
-                  userId: widget.userId, //animationController,
-                ),
                 _PaidAdWidget(
                   animationController: widget.animationController,
                   animation: Tween<double>(begin: 0.0, end: 1.0).animate(
@@ -413,7 +431,6 @@ class _ProfilePageState extends State<ProfileView>
                   ),
                   userId: widget.userId, //animationController,
                 ),
-
                 ListingDataWidget(
                   animationController: widget.animationController,
                   userId: widget.userId,
@@ -428,20 +445,20 @@ class _ProfilePageState extends State<ProfileView>
                   status: '1', //animationController,
                 ),
                 _SoldOutListingDataWidget(
-                  animationController: widget.animationController,
-                  userId: widget.userId,
-                  animation: Tween<double>(begin: 0.0, end: 1.0).animate(
-                    CurvedAnimation(
-                      parent: widget.animationController,
-                      curve: const Interval((1 / 4) * 2, 1.0,
-                          curve: Curves.fastOutSlowIn),
+                    animationController: widget.animationController,
+                    userId: widget.userId,
+                    animation: Tween<double>(begin: 0.0, end: 1.0).animate(
+                      CurvedAnimation(
+                        parent: widget.animationController,
+                        curve: const Interval((1 / 4) * 2, 1.0,
+                            curve: Curves.fastOutSlowIn),
+                      ),
                     ),
-                  ),
-                  headerTitle:
-                      Utils.getString(context, 'item_entry__sold_out'),
-                      isSoldOut: '1'
-                //  status: '0', //animationController,
-                ),
+                    headerTitle:
+                        Utils.getString(context, 'item_entry__sold_out'),
+                    isSoldOut: '1'
+                    //  status: '0', //animationController,
+                    ),
                 _PendingListingDataWidget(
                   animationController: widget.animationController,
                   userId: widget.userId,
@@ -632,11 +649,9 @@ class __BuyAdTransactionWidgetState extends State<_BuyAdTransactionWidget> {
                 Widget? child) {
       return AnimatedBuilder(
           animation: widget.animationController!,
-          child: 
-          (productProvider.transactionList.data != null &&
+          child: (productProvider.transactionList.data != null &&
                   productProvider.transactionList.data!.isNotEmpty)
-              ? 
-              Column(children: <Widget>[
+              ? Column(children: <Widget>[
                   _HeaderWidget(
                     headerName: Utils.getString(
                         context, 'profile__package_transaction_history'),
@@ -645,17 +660,15 @@ class __BuyAdTransactionWidgetState extends State<_BuyAdTransactionWidget> {
                         context,
                         RoutePaths.packageTransactionHistoryList,
                       ).then((Object? value) {
-                          productProvider.resetPackageTransactionDetailList(
-                            PackgageBoughtTransactionParameterHolder(userId: 
-                              Utils.checkUserLoginId(psValueHolder!)
-                            )
-                          );
+                        productProvider.resetPackageTransactionDetailList(
+                            PackgageBoughtTransactionParameterHolder(
+                                userId:
+                                    Utils.checkUserLoginId(psValueHolder!)));
                       });
                     },
                   ),
                   Container(
                       height: 120,
-                      
                       width: MediaQuery.of(context).size.width,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
@@ -674,14 +687,13 @@ class __BuyAdTransactionWidgetState extends State<_BuyAdTransactionWidget> {
                               return BuyAdTransactionHorizontalListItem(
                                 transaction: productProvider
                                     .transactionList.data![index],
-                                onTap: () {
-                                  
-                                },
+                                onTap: () {},
                               );
                             }
                           }))
-                ]) : Container(),
-             // : Container(),
+                ])
+              : Container(),
+          // : Container(),
           builder: (BuildContext context, Widget? child) {
             return FadeTransition(
                 opacity: widget.animation!,
@@ -760,40 +772,44 @@ class _ListingDataWidgetState extends State<ListingDataWidget> {
                                     PsFrameUIForLoading(),
                                   ]));
                             } else {
-                                 if (productProvider
+                              if (productProvider
                                       .itemList.data![index].adType! ==
                                   PsConst.GOOGLE_AD_TYPE) {
-                                return  Container();
+                                return Container();
                               } else {
-                              return ProductHorizontalListItemForProfile(
-                                product: productProvider.itemList.data![index],
-                                coreTagKey: productProvider.hashCode
-                                        .toString() +
-                                    productProvider.itemList.data![index].id!,
-                                onTap: () {
-                                  print(productProvider.itemList.data![index]
-                                      .defaultPhoto!.imgPath);
-                                  final Product product = productProvider
-                                      .itemList.data!.reversed
-                                      .toList()[index];
-                                  final ProductDetailIntentHolder holder =
-                                      ProductDetailIntentHolder(
-                                          productId: productProvider
-                                              .itemList.data![index].id,
-                                          heroTagImage: productProvider.hashCode
-                                                  .toString() +
-                                              product.id! +
-                                              PsConst.HERO_TAG__IMAGE,
-                                          heroTagTitle: productProvider.hashCode
-                                                  .toString() +
-                                              product.id! +
-                                              PsConst.HERO_TAG__TITLE);
-                                  Navigator.pushNamed(
-                                      context, RoutePaths.productDetail,
-                                      arguments: holder);
-                                },
-                              );
-                            }}
+                                return ProductHorizontalListItemForProfile(
+                                  product:
+                                      productProvider.itemList.data![index],
+                                  coreTagKey: productProvider.hashCode
+                                          .toString() +
+                                      productProvider.itemList.data![index].id!,
+                                  onTap: () {
+                                    print(productProvider.itemList.data![index]
+                                        .defaultPhoto!.imgPath);
+                                    final Product product = productProvider
+                                        .itemList.data!.reversed
+                                        .toList()[index];
+                                    final ProductDetailIntentHolder holder =
+                                        ProductDetailIntentHolder(
+                                            productId: productProvider
+                                                .itemList.data![index].id,
+                                            heroTagImage: productProvider
+                                                    .hashCode
+                                                    .toString() +
+                                                product.id! +
+                                                PsConst.HERO_TAG__IMAGE,
+                                            heroTagTitle: productProvider
+                                                    .hashCode
+                                                    .toString() +
+                                                product.id! +
+                                                PsConst.HERO_TAG__TITLE);
+                                    Navigator.pushNamed(
+                                        context, RoutePaths.productDetail,
+                                        arguments: holder);
+                                  },
+                                );
+                              }
+                            }
                           }))
                 ])
               : Container(),
@@ -963,8 +979,9 @@ class ___SoldOutListingDataWidgetState
                     headerName: widget.headerTitle,
                     viewAllClicked: () {
                       Navigator.pushNamed(
-                          context, RoutePaths.itemSoldOutProductList,
-                          );
+                        context,
+                        RoutePaths.itemSoldOutProductList,
+                      );
                     },
                   ),
                   Container(
@@ -1601,60 +1618,57 @@ class _EditProfileWidget extends StatelessWidget {
     return Row(
       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-           Expanded(
-
-       child: Container(
-          width: 155,
+        Container(
+          width: 180,
           height: PsDimens.space48,
-            child: PSButtonWidgetWithIconRoundCorner(
-              hasShadow: false,
-              icon: Icons.edit,
-              iconColor: PsColors.activeColor, //PsColors.primary500,
-              colorData: PsColors.baseColor,
-              titleText: Utils.getString(context, 'edit_profile__title'),
-              onPressed: () async {
-                final dynamic returnData = await Navigator.pushNamed(
-                  context,
-                  RoutePaths.editProfile,
-                );
-                if (returnData != null && returnData is bool) {
-                  userProvider.getUser(userProvider.psValueHolder!.loginUserId);
-                  final PaidAdItemProvider paidAdItemProvider =
-                      Provider.of<PaidAdItemProvider>(context, listen: false);
-                  paidAdItemProvider.resetPaidAdItemList(
-                      paidAdItemProvider.psValueHolder!.loginUserId);
-                  final AddedItemProvider addedItemProvider =
-                      Provider.of<AddedItemProvider>(context, listen: false);
-                  addedItemProvider.resetItemList(
-                      addedItemProvider.psValueHolder!.loginUserId,
-                      addedItemProvider.addedUserParameterHolder);
-                  final PendingProductProvider pendingProductProvider =
-                      Provider.of<PendingProductProvider>(context, listen: false);
-                  pendingProductProvider.resetProductList(
-                      pendingProductProvider.psValueHolder!.loginUserId,
-                      pendingProductProvider.addedUserParameterHolder);
-                  final RejectedProductProvider rejectedProductProvider =
-                      Provider.of<RejectedProductProvider>(context,
-                          listen: false);
-                  rejectedProductProvider.resetProductList(
-                      rejectedProductProvider.psValueHolder!.loginUserId,
-                      rejectedProductProvider.addedUserParameterHolder);
-                  final DisabledProductProvider disabledProductProvider =
-                      Provider.of<DisabledProductProvider>(context,
-                          listen: false);
-                  disabledProductProvider.resetProductList(
-                      disabledProductProvider.psValueHolder!.loginUserId,
-                      disabledProductProvider.addedUserParameterHolder);
-                }
-              },
-            ),
+          child: PSButtonWidgetWithIconRoundCorner(
+            hasShadow: false,
+            icon: Icons.edit,
+            iconColor: PsColors.activeColor, //PsColors.primary500,
+            colorData: PsColors.baseColor,
+            titleText: Utils.getString(context, 'edit_profile__title'),
+            onPressed: () async {
+              final dynamic returnData = await Navigator.pushNamed(
+                context,
+                RoutePaths.editProfile,
+              );
+              if (returnData != null && returnData is bool) {
+                userProvider.getUser(userProvider.psValueHolder!.loginUserId);
+                final PaidAdItemProvider paidAdItemProvider =
+                    Provider.of<PaidAdItemProvider>(context, listen: false);
+                paidAdItemProvider.resetPaidAdItemList(
+                    paidAdItemProvider.psValueHolder!.loginUserId);
+                final AddedItemProvider addedItemProvider =
+                    Provider.of<AddedItemProvider>(context, listen: false);
+                addedItemProvider.resetItemList(
+                    addedItemProvider.psValueHolder!.loginUserId,
+                    addedItemProvider.addedUserParameterHolder);
+                final PendingProductProvider pendingProductProvider =
+                    Provider.of<PendingProductProvider>(context, listen: false);
+                pendingProductProvider.resetProductList(
+                    pendingProductProvider.psValueHolder!.loginUserId,
+                    pendingProductProvider.addedUserParameterHolder);
+                final RejectedProductProvider rejectedProductProvider =
+                    Provider.of<RejectedProductProvider>(context,
+                        listen: false);
+                rejectedProductProvider.resetProductList(
+                    rejectedProductProvider.psValueHolder!.loginUserId,
+                    rejectedProductProvider.addedUserParameterHolder);
+                final DisabledProductProvider disabledProductProvider =
+                    Provider.of<DisabledProductProvider>(context,
+                        listen: false);
+                disabledProductProvider.resetProductList(
+                    disabledProductProvider.psValueHolder!.loginUserId,
+                    disabledProductProvider.addedUserParameterHolder);
+              }
+            },
           ),
         ),
         const SizedBox(
           width: PsDimens.space12,
         ),
         Container(
-          width: 120,
+          width: 155,
           height: PsDimens.space48,
           // decoration: BoxDecoration(
           //   color: PsColors.primary50,
@@ -1668,15 +1682,15 @@ class _EditProfileWidget extends StatelessWidget {
             colorData: PsColors.activeColor,
             titleText: Utils.getString(context, 'profile__more'),
             onPressed: () async {
-            final dynamic returnData = await Navigator.pushNamed(
-                    context, RoutePaths.more,
-                    arguments: userProvider.user.data!.userName);
-                if (returnData) {
-                  // ignore: unnecessary_null_comparison
-                 // if (callLogoutCallBack != null) {
-                    callLogoutCallBack(userProvider.psValueHolder!.loginUserId);
-                 // }
-                }
+              final dynamic returnData = await Navigator.pushNamed(
+                  context, RoutePaths.more,
+                  arguments: userProvider.user.data!.userName);
+              if (returnData) {
+                // ignore: unnecessary_null_comparison
+                // if (callLogoutCallBack != null) {
+                callLogoutCallBack(userProvider.psValueHolder!.loginUserId);
+                // }
+              }
             },
           ),
         ),
@@ -1710,7 +1724,8 @@ class _JoinDateWidget extends StatelessWidget {
                 Text(
                   userProvider!.user.data!.addedDateTimeStamp != null &&
                           userProvider!.user.data!.addedDateTimeStamp != ''
-                      ? Utils.getDateFormat(userProvider!.user.data!.addedDate, userProvider!.psValueHolder!.dateFormat!)
+                      ? Utils.getDateFormat(userProvider!.user.data!.addedDate,
+                          userProvider!.psValueHolder!.dateFormat!)
                       : Utils.changeTimeStampToStandardDateTimeFormat(
                           userProvider!.user.data!.addedDateTimeStamp),
                   textAlign: TextAlign.start,
@@ -2091,8 +2106,8 @@ class _RatingWidget extends StatelessWidget {
 
 class _ImageAndTextWidget extends StatelessWidget {
   const _ImageAndTextWidget({
-   required this.userProvider,
-   required this.callLogoutCallBack,
+    required this.userProvider,
+    required this.callLogoutCallBack,
     required this.status,
     required this.headerTitle,
   });
@@ -2130,35 +2145,36 @@ class _ImageAndTextWidget extends StatelessWidget {
                   onTap: () {},
                 ),
               ),
-              
+
               Padding(
-                  padding: const EdgeInsets.only(
-                      left: PsDimens.space28, right: PsDimens.space12),
-                  child: (psValueHolder.isPaidApp == PsConst.ONE) ? 
-                  Column(
-                    children: <Widget>[
-                      Text(
-                        userProvider.user.data!.remainingPost!,
-                        textAlign: TextAlign.start,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleLarge
-                            ?.copyWith(color: PsColors.activeColor),
-                        maxLines: 1,
-                      ),
-                      Text(
-                        Utils.getString(context, 'post__left'),
-                        textAlign: TextAlign.start,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.copyWith(color: PsColors.textColor3),
-                        maxLines: 1,
-                      ),
-                    ],
-                  ) : Container(),
-                ),
+                padding: const EdgeInsets.only(
+                    left: PsDimens.space28, right: PsDimens.space12),
+                child: (psValueHolder.isPaidApp == PsConst.ONE)
+                    ? Column(
+                        children: <Widget>[
+                          Text(
+                            userProvider.user.data!.remainingPost!,
+                            textAlign: TextAlign.start,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(color: PsColors.activeColor),
+                            maxLines: 1,
+                          ),
+                          Text(
+                            Utils.getString(context, 'Post left'),
+                            textAlign: TextAlign.start,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.copyWith(color: PsColors.textColor3),
+                            maxLines: 1,
+                          ),
+                        ],
+                      )
+                    : Container(),
+              ),
               InkWell(
                 onTap: () {
                   Navigator.pushNamed(

@@ -61,52 +61,40 @@ class _LanguageSettingViewState extends State<LanguageSettingView> {
       },
       child: Consumer<LanguageProvider>(builder:
           (BuildContext context, LanguageProvider provider, Widget? child) {
-        return AnimatedBuilder(
-            animation: widget.animationController!,
-            child: SingleChildScrollView(
-                child: Container(
-              padding: const EdgeInsets.all(PsDimens.space8),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  PsDropdownBaseWidget(
-                      title: Utils.getString(
-                          context, 'language_selection__select'),
-                      selectedText: provider.getLanguage().name,
-                      onTap: () async {
-                        //provider.getLanguageList();
-                        final dynamic result = await Navigator.pushNamed(
-                            context, RoutePaths.languageList);
-                        if (result != null && result is Language) {
-                          // EasyLocalization.of(context).set
-                          // await data.changeLocale(result.toLocale());
+        return SingleChildScrollView(
+            child: Container(
+          padding: const EdgeInsets.all(PsDimens.space8),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              PsDropdownBaseWidget(
+                  title: Utils.getString(context, 'language_selection__select'),
+                  selectedText: provider.getLanguage().name,
+                  onTap: () async {
+                    //provider.getLanguageList();
+                    final dynamic result = await Navigator.pushNamed(
+                        context, RoutePaths.languageList);
+                    if (result != null && result is Language) {
+                      // EasyLocalization.of(context).set
+                      // await data.changeLocale(result.toLocale());
 
-                          // EasyLocalization.of(context).
+                      // EasyLocalization.of(context).
 
-                          await provider.addLanguage(result);
-                          EasyLocalization.of(context)?.setLocale(
-                              Locale(result.languageCode!, result.countryCode));
-                        }
-                        Utils.psPrint(result.toString());
-                      }),
-                  // const PsAdMobBannerWidget(
-                  //   admobSize: AdSize.mediumRectangle,
-                  // admobBannerSize: AdmobBannerSize.MEDIUM_RECTANGLE,
-                  // ),
-                ],
-              ),
-            )),
-            builder: (BuildContext context, Widget? child) {
-              return child ?? SizedBox();
-              // return FadeTransition(
-              //     opacity: animation,
-              //     child: Transform(
-              //         transform: Matrix4.translationValues(
-              //             0.0, 100 * (1.0 - animation.value), 0.0),
-              //         child: child));
-            });
+                      await provider.addLanguage(result);
+                      EasyLocalization.of(context)?.setLocale(
+                          Locale(result.languageCode!, result.countryCode));
+                    }
+                    Utils.psPrint(result.toString());
+                  }),
+              // const PsAdMobBannerWidget(
+              //   admobSize: AdSize.mediumRectangle,
+              // admobBannerSize: AdmobBannerSize.MEDIUM_RECTANGLE,
+              // ),
+            ],
+          ),
+        ));
       }),
       // ),
     );

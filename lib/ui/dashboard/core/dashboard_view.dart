@@ -225,6 +225,7 @@ class _HomeViewState extends State<DashboardView>
 
       if (data != null) {
         final Uri deepLink = data.link;
+        print(deepLink.toString());
         // ignore: unnecessary_null_comparison
         if (deepLink != null) {
           final Map<String, String> queryParams = deepLink.queryParameters;

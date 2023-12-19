@@ -102,7 +102,6 @@ class _MenuFAQViewState extends State<MenuFAQView> {
                   //     );
                   //   },
                   // },
-
                   // ignore: always_specify_types
                   //   style: {
                   //   '#': Style(

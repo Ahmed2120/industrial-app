@@ -23,7 +23,7 @@ class PsConfig {
   /// API URL
   /// Change your backend url
   ///
-  static const String ps_core_url = 'https://industrial.dev.tqnia.me/admin';
+  static const String ps_core_url = 'https://industrialsooq.com/admin';
   // 'https://www.products.panacea-soft.co/flutter-buysell-demo';
 
   static const String ps_app_url = ps_core_url + '/index.php/';

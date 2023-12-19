@@ -199,7 +199,6 @@ class _TextWidgetState extends State<TextWidget> {
                   //     );
                   //   },
                   // },
-
                   // ignore: always_specify_types
                   //   style: {
                   //   '#': Style(

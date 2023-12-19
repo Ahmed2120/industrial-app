@@ -58,6 +58,15 @@ class DefaultFirebaseOptions {
     storageBucket: 'industrial-sooq.appspot.com',
   );
 
+  // static const FirebaseOptions android = FirebaseOptions(
+  //   apiKey: 'AIzaSyALcs0v7tZcSHVB3eXVYoFBD7g9lE9h7kc',
+  //   appId: '1:160852679256:web:3f99daa5f403366640882d',
+  //   messagingSenderId: '160852679256',
+  //   projectId: 'indre-e52a7',
+  //   // databaseURL: 'https://industrial-sooq-default-rtdb.firebaseio.com',
+  //   storageBucket: 'indre-e52a7.appspot.com',
+  // );
+
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAfyATmR78rHDwFdi9EuY7WmCdi9H00rVw',
     appId: '1:720366874096:ios:88602260505b3ae891c135',
@@ -65,8 +74,10 @@ class DefaultFirebaseOptions {
     projectId: 'industrial-sooq',
     databaseURL: 'https://industrial-sooq-default-rtdb.firebaseio.com',
     storageBucket: 'industrial-sooq.appspot.com',
-    androidClientId: '720366874096-dp2heqm3gnev2iqjp54cmor6rlhcevmh.apps.googleusercontent.com',
-    iosClientId: '720366874096-9mt6b6793rg5g35l367ca9ehpt3nrin9.apps.googleusercontent.com',
+    androidClientId:
+        '720366874096-dp2heqm3gnev2iqjp54cmor6rlhcevmh.apps.googleusercontent.com',
+    iosClientId:
+        '720366874096-9mt6b6793rg5g35l367ca9ehpt3nrin9.apps.googleusercontent.com',
     iosBundleId: 'com.tqniait.industrialSoooq',
   );
 }

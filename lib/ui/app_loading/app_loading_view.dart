@@ -609,14 +609,13 @@ class AppLoadingView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Container(
-                        width: 185,
-                        height: 185,
+                        width: 150,
+                        height: 150,
                         child: Image.asset(
-                          'assets/images/app_icon0.png',
-                          // Utils.isLightMode(context)
-                          //     ? 'assets/images/app_icon.png'
-                          //     : 'assets/images/logo_dark.png',
-                          fit: BoxFit.contain,
+                          Utils.isLightMode(context)
+                              ? 'assets/images/app_icon2.png'
+                              : 'assets/images/app_icon2.png',
+                          fit: BoxFit.cover,
                         ),
                       ),
                       const SizedBox(

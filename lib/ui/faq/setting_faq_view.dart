@@ -104,7 +104,6 @@ class _SettingFAQViewState extends State<SettingFAQView>
                   //     );
                   //   },
                   // },
-
                   // ignore: always_specify_types
                   //   style: {
                   //   '#': Style(

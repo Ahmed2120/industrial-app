@@ -81,9 +81,6 @@ class UserRepository extends PsRepository {
     final PsResource<User> _resource =
         await _psApiService.postUserRegister(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
-      print(_resource);
-      print('naaaaaame');
-
       return _resource;
     } else {
       final Completer<PsResource<User>> completer =

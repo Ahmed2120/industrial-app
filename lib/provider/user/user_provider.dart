@@ -1037,6 +1037,22 @@ class UserProvider extends PsProvider {
     }
   }
 
+  dynamic callWarningDialog(BuildContext context, String text) {
+    showDialog<dynamic>(
+        context: context,
+        builder: (BuildContext context) {
+          return WarningDialog(
+            message: Utils.getString(context, text),
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                RoutePaths.login_container,
+              );
+            },
+          );
+        });
+  }
+
   ///
   /// Email Login Related
   ///
@@ -1153,7 +1169,6 @@ class UserProvider extends PsProvider {
           user = result.user;
         } on PlatformException catch (e) {
           print(e);
-
           final fb_auth.User? _user2 = await createUserWithEmailAndPassword(
               context, PsConst.defaultEmail, PsConst.defaultPassword,
               ignoreHandleFirebaseAuthError: true);
@@ -1231,6 +1246,8 @@ class UserProvider extends PsProvider {
           ///
           ///
           PsProgressDialog.dismissDialog();
+          callWarningDialog(
+              context, Utils.getString(context, 'successfullyـregistered'));
 
           if (resourceUser.data != null) {
             ///
@@ -1269,8 +1286,8 @@ class UserProvider extends PsProvider {
               }
             } else {
               // Approval On
-              if (onRegisterSelected == null) {
-                onRegisterSelected!(resourceUser.data);
+              if (onRegisterSelected != null) {
+                onRegisterSelected(resourceUser.data);
               } else {
                 await replaceVerifyUserData(
                     resourceUser.data!.userId!,
@@ -1297,6 +1314,7 @@ class UserProvider extends PsProvider {
                   psValueHolder!.userEmailToVerify = '';
                   psValueHolder!.userPasswordToVerify = '';
                   print(user.userId);
+
                   Navigator.pop(context, resourceUser.data);
                 }
               }
@@ -1398,8 +1416,6 @@ class UserProvider extends PsProvider {
       String name,
       String email,
       String password) async {
-    print(psValueHolder!.deviceToken);
-
     final UserRegisterParameterHolder userRegisterParameterHolder =
         UserRegisterParameterHolder(
       userId: '',

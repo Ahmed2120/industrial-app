@@ -64,7 +64,7 @@ class _SafetyTipsViewState extends State<SafetyTipsView> {
                       ),
                     ),
                     'th': Style(
-                      padding: HtmlPaddings.all(6),
+                      padding:  HtmlPaddings.all(6),
                       backgroundColor: Colors.grey,
                     ),
                     'td': Style(
@@ -103,7 +103,6 @@ class _SafetyTipsViewState extends State<SafetyTipsView> {
                   //     );
                   //   },
                   // },
-
                   // ignore: always_specify_types
                   //   style: {
                   //   '#': Style(

@@ -184,8 +184,8 @@ class PackageRecommendedWidgetState extends State<PackageRecommendedWidget> {
 
     try {
       // if (productDetails.id == _kConsumableId) {
-      final bool status = await _iap.buyConsumable(
-          purchaseParam: purchaseParam);
+      final bool status =
+          await _iap.buyConsumable(purchaseParam: purchaseParam);
       print(status);
       // }
     } catch (e) {
@@ -215,8 +215,7 @@ class PackageRecommendedWidgetState extends State<PackageRecommendedWidget> {
   Package? getPackageByIAPKey(String key) {
     final int index = packageBoughtProvider!.packageList.data!
         .indexWhere((Package package) => package.iapId == key);
-    if (index == -1) 
-      return null;    
+    if (index == -1) return null;
     final Package package =
         packageBoughtProvider!.packageList.data!.elementAt(index);
     return package;
@@ -279,8 +278,8 @@ class PackageRecommendedWidgetState extends State<PackageRecommendedWidget> {
                                   (BuildContext context, int index) {
                                     final Package? package =
                                         getPackageByIAPKey(_products[index].id);
-                                    if (package == null) 
-                                      return const SizedBox();   
+                                    if (package == null)
+                                      return const SizedBox();
                                     return PackageItem(
                                       package: package,
                                       priceWithCurrency: _products[index].price,

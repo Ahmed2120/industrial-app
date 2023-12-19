@@ -80,7 +80,8 @@ mixin Utils {
   }
 
   static String getPriceFormat(String price, String priceFormat) {
-    return NumberFormat(priceFormat).format(double.parse(price != '' ? price : '0'));
+    return NumberFormat(priceFormat)
+        .format(double.parse(price != '' ? price : '0'));
   }
 
   static String getChatPriceFormat(String message, String priceFormat) {
@@ -154,7 +155,7 @@ mixin Utils {
   }
 
   static DateTime getDateOnlyFromTimeStamp(int timeStamp) {
-    final DateFormat formatter = DateFormat('yyyy-MM-dd' , 'en_US');
+    final DateFormat formatter = DateFormat('yyyy-MM-dd', 'en_US');
     final DateTime datetimeMessage =
         DateTime.fromMillisecondsSinceEpoch(timeStamp, isUtc: true);
     final String s = formatter.format(datetimeMessage);
@@ -236,33 +237,33 @@ mixin Utils {
 
     // final ByteData byteData = await asset.getByteData(quality: 80);
 
-    final  Uint8List byteData = await xFile.readAsBytes();
+    final Uint8List byteData = await xFile.readAsBytes();
 
     // final bool status = await Utils.requestWritePermission();
 
     //if (status) {
-      final Directory _appTempDir = await getTemporaryDirectory();
+    final Directory _appTempDir = await getTemporaryDirectory();
 
-      final Directory _appTempDirFolder =
-          Directory('${_appTempDir.path}/${PsConfig.tmpImageFolderName}');
+    final Directory _appTempDirFolder =
+        Directory('${_appTempDir.path}/${PsConfig.tmpImageFolderName}');
 
-      if (!_appTempDirFolder.existsSync()) {
-        await _appTempDirFolder.create(recursive: true);
-      }
-      final File file = File('${_appTempDirFolder.path}/${xFile.name}');
-      await file.writeAsBytes(byteData.buffer
-          .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+    if (!_appTempDirFolder.existsSync()) {
+      await _appTempDirFolder.create(recursive: true);
+    }
+    final File file = File('${_appTempDirFolder.path}/${xFile.name}');
+    await file.writeAsBytes(byteData.buffer
+        .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
 
-      print(file.path);
-      final ImageProperties properties =
-          await FlutterNativeImage.getImageProperties(file.path);
-      final File compressedFile = await FlutterNativeImage.compressImage(
-          file.path,
-          quality: 80,
-          targetWidth: imageWidth,
-          targetHeight:
-              (properties.height! * imageWidth / properties.width!).round());
-      return compressedFile;
+    print(file.path);
+    final ImageProperties properties =
+        await FlutterNativeImage.getImageProperties(file.path);
+    final File compressedFile = await FlutterNativeImage.compressImage(
+        file.path,
+        quality: 80,
+        targetWidth: imageWidth,
+        targetHeight:
+            (properties.height! * imageWidth / properties.width!).round());
+    return compressedFile;
     // } else {
     //   // Toast
     //   // We don't have permission to read/write images.
@@ -363,8 +364,9 @@ mixin Utils {
   static dynamic launchURL() async {
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
     print(packageInfo.packageName);
-    final Uri url = Uri.parse('https://play.google.com/store/apps/details?id=${packageInfo.packageName}');
-       // 'https://play.google.com/store/apps/details?id=${packageInfo.packageName}';
+    final Uri url = Uri.parse(
+        'https://play.google.com/store/apps/details?id=${packageInfo.packageName}');
+    // 'https://play.google.com/store/apps/details?id=${packageInfo.packageName}';
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
     } else {
@@ -521,22 +523,21 @@ mixin Utils {
   //       });
   // }
 
-    static void subscribeToModelTopics(List<String?> subcatList) {
-
+  static void subscribeToModelTopics(List<String?> subcatList) {
     if (Platform.isIOS) {
-        FirebaseMessaging.instance.requestPermission(
-            alert: true,
-            announcement: false,
-            badge: true,
-            carPlay: false,
-            criticalAlert: false,
-            provisional: false,
-            sound: true);
-      }
+      FirebaseMessaging.instance.requestPermission(
+          alert: true,
+          announcement: false,
+          badge: true,
+          carPlay: false,
+          criticalAlert: false,
+          provisional: false,
+          sound: true);
+    }
 
     for (String? subCat in subcatList) {
       FirebaseMessaging.instance.subscribeToTopic(subCat ?? '');
-    } 
+    }
   }
 
   static void unSubsribeFromModelTopics(List<String?> subcatList) {
@@ -544,7 +545,6 @@ mixin Utils {
       FirebaseMessaging.instance.unsubscribeFromTopic(subCat ?? '');
     }
   }
-
 
   static Future<void> _onSelectReviewNotification(
       BuildContext context, String payload, String? userId) async {
@@ -894,7 +894,7 @@ mixin Utils {
     }
   }
 
-  static bool showUI (String? valueHolderData) {
+  static bool showUI(String? valueHolderData) {
     return valueHolderData == PsConst.ONE;
   }
 

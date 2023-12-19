@@ -47,7 +47,6 @@ abstract class PsApi {
 
       if (psApiResponse.isSuccessful()) {
         final dynamic hashMap = json.decode(response.body);
-
         if (!(hashMap is Map)) {
           final List<T> tList = <T>[];
           hashMap.forEach((dynamic data) {
@@ -219,7 +218,8 @@ abstract class PsApi {
         final int length = await imageFile.length();
 
         final Uri uri = Uri.parse('${PsConfig.ps_app_url}$url');
-
+        print(uri.toString());
+        print('aasdoiadiadadaia');
         final MultipartRequest request = http.MultipartRequest('POST', uri);
         final MultipartFile multipartFile = http.MultipartFile(
             'file', stream, length,
