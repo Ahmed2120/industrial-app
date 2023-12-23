@@ -256,6 +256,10 @@ echo "SUCCESS" &gt; "${SCRIPT_OUTPUT_FILE_0}"
 				<string>YES</string>
 				<key>CODE_SIGN_ENTITLEMENTS</key>
 				<string>Runner/Runner.entitlements</string>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>iPhone Developer: Created via API (975AD584Y6)</string>
+				<key>CODE_SIGN_STYLE</key>
+				<string>Manual</string>
 				<key>CURRENT_PROJECT_VERSION</key>
 				<string>41</string>
 				<key>DEVELOPMENT_TEAM</key>
@@ -291,6 +295,8 @@ echo "SUCCESS" &gt; "${SCRIPT_OUTPUT_FILE_0}"
 				<string>com.tqniait.industrialSoooq</string>
 				<key>PRODUCT_NAME</key>
 				<string>$(TARGET_NAME)</string>
+				<key>PROVISIONING_PROFILE_SPECIFIER</key>
+				<string>industrialSooq ios_app_development 1703064309</string>
 				<key>SWIFT_OBJC_BRIDGING_HEADER</key>
 				<string>Runner/Runner-Bridging-Header.h</string>
 				<key>SWIFT_VERSION</key>
@@ -615,8 +621,12 @@ echo "SUCCESS" &gt; "${SCRIPT_OUTPUT_FILE_0}"
 					<dict>
 						<key>CreatedOnToolsVersion</key>
 						<string>7.3.1</string>
+						<key>DevelopmentTeam</key>
+						<string>TGCR53R992</string>
 						<key>LastSwiftMigration</key>
 						<string>0910</string>
+						<key>ProvisioningStyle</key>
+						<string>Manual</string>
 					</dict>
 				</dict>
 			</dict>
@@ -1126,6 +1136,10 @@ echo "SUCCESS" &gt; "${SCRIPT_OUTPUT_FILE_0}"
 				<string>YES</string>
 				<key>CODE_SIGN_ENTITLEMENTS</key>
 				<string>Runner/Runner.entitlements</string>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>iPhone Developer: Created via API (975AD584Y6)</string>
+				<key>CODE_SIGN_STYLE</key>
+				<string>Manual</string>
 				<key>CURRENT_PROJECT_VERSION</key>
 				<string>41</string>
 				<key>DEVELOPMENT_TEAM</key>
@@ -1161,6 +1175,8 @@ echo "SUCCESS" &gt; "${SCRIPT_OUTPUT_FILE_0}"
 				<string>com.tqniait.industrialSoooq</string>
 				<key>PRODUCT_NAME</key>
 				<string>$(TARGET_NAME)</string>
+				<key>PROVISIONING_PROFILE_SPECIFIER</key>
+				<string>industrialSooq ios_app_development 1703064309</string>
 				<key>SWIFT_OBJC_BRIDGING_HEADER</key>
 				<string>Runner/Runner-Bridging-Header.h</string>
 				<key>SWIFT_OPTIMIZATION_LEVEL</key>
@@ -1187,6 +1203,10 @@ echo "SUCCESS" &gt; "${SCRIPT_OUTPUT_FILE_0}"
 				<string>YES</string>
 				<key>CODE_SIGN_ENTITLEMENTS</key>
 				<string>Runner/Runner.entitlements</string>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>iPhone Developer: Created via API (975AD584Y6)</string>
+				<key>CODE_SIGN_STYLE</key>
+				<string>Manual</string>
 				<key>CURRENT_PROJECT_VERSION</key>
 				<string>41</string>
 				<key>DEVELOPMENT_TEAM</key>
@@ -1222,6 +1242,8 @@ echo "SUCCESS" &gt; "${SCRIPT_OUTPUT_FILE_0}"
 				<string>com.tqniait.industrialSoooq</string>
 				<key>PRODUCT_NAME</key>
 				<string>$(TARGET_NAME)</string>
+				<key>PROVISIONING_PROFILE_SPECIFIER</key>
+				<string>industrialSooq ios_app_development 1703064309</string>
 				<key>SWIFT_OBJC_BRIDGING_HEADER</key>
 				<string>Runner/Runner-Bridging-Header.h</string>
 				<key>SWIFT_VERSION</key>
